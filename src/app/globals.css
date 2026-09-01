@@ -1,5 +1,5 @@
 @import "tailwindcss";
-
+@source "../../src";
 /* ============================================================
    QuadA Services — Global Design System
    Brand: Deep Navy + Warm Cream — Formal, Reliable, Premium
@@ -46,8 +46,8 @@
     --accent-foreground: #fff;
 
     /* Typography scale */
-    --font-display: 'Cormorant Garamond', Georgia, serif;
-    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-display: var(--font-cormorant), Georgia, serif;
+    --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
 
     /* Spacing */
     --section-padding: clamp(4rem, 8vw, 8rem);

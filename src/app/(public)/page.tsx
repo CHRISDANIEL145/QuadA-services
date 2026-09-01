@@ -6,6 +6,7 @@ import { motion } from 'framer-motion'
 import { ArrowRight, CheckCircle2, MapPin, Star } from 'lucide-react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useGSAP } from '@gsap/react'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -46,7 +47,7 @@ export default function HomePage() {
   const journeyRef = useRef<HTMLDivElement>(null)
   const stepsRef = useRef<HTMLDivElement[]>([])
 
-  useEffect(() => {
+  useGSAP(() => {
     // Reduced-motion check
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (prefersReduced) return
@@ -55,29 +56,30 @@ export default function HomePage() {
     const steps = stepsRef.current.filter(Boolean)
     if (!steps.length) return
 
-    const ctx = gsap.context(() => {
-      // Stagger the steps on scroll with a premium, slower ease
-      steps.forEach((step, i) => {
-        gsap.fromTo(
-          step,
-          { opacity: 0, x: i % 2 === 0 ? -50 : 50, y: 30 },
-          {
-            opacity: 1, x: 0, y: 0,
-            duration: 1.2,
-            ease: 'power4.out',
-            scrollTrigger: {
-              trigger: step,
-              start: 'top 85%',
-              end: 'top 40%',
-              toggleActions: 'play none none reverse',
-            },
-          }
-        )
-      })
-    }, journeyRef)
+    // Stagger the steps on scroll with a premium, slower ease
+    steps.forEach((step, i) => {
+      gsap.fromTo(
+        step,
+        { opacity: 0, x: i % 2 === 0 ? -50 : 50, y: 30 },
+        {
+          opacity: 1, x: 0, y: 0,
+          duration: 1.2,
+          ease: 'power4.out',
+          scrollTrigger: {
+            trigger: step,
+            start: 'top 85%',
+            end: 'top 40%',
+            toggleActions: 'play none none reverse',
+          },
+        }
+      )
+    })
 
-    return () => ctx.revert()
-  }, [])
+    // Force recalculation of heights after layout and fonts are fully painted
+    setTimeout(() => {
+      ScrollTrigger.refresh()
+    }, 500)
+  }, { scope: journeyRef })
 
   return (
     <>
