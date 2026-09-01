@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS admins (
 -- SERVICE CATEGORIES TABLE
 -- ============================================================
 CREATE TABLE IF NOT EXISTS service_categories (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name TEXT NOT NULL,
   slug TEXT NOT NULL UNIQUE,
   description TEXT,
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS service_categories (
 -- SERVICES TABLE
 -- ============================================================
 CREATE TABLE IF NOT EXISTS services (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   category_id UUID NOT NULL REFERENCES service_categories(id) ON DELETE RESTRICT,
   name TEXT NOT NULL,
   slug TEXT NOT NULL UNIQUE,
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS services (
 -- SERVICE AREAS TABLE
 -- ============================================================
 CREATE TABLE IF NOT EXISTS service_areas (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name TEXT NOT NULL,
   state TEXT NOT NULL DEFAULT 'Tamil Nadu',
   is_active BOOLEAN NOT NULL DEFAULT true,
@@ -78,7 +78,7 @@ CREATE SEQUENCE IF NOT EXISTS lead_number_seq START 1;
 -- Core business entity — the product
 -- ============================================================
 CREATE TABLE IF NOT EXISTS leads (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   lead_number TEXT NOT NULL UNIQUE DEFAULT 'LEAD-' || LPAD(NEXTVAL('lead_number_seq')::TEXT, 6, '0'),
   customer_name TEXT NOT NULL,
   phone TEXT NOT NULL,
@@ -108,7 +108,7 @@ CREATE TABLE IF NOT EXISTS leads (
 -- File metadata — actual files in Supabase Storage
 -- ============================================================
 CREATE TABLE IF NOT EXISTS lead_attachments (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   lead_id UUID NOT NULL REFERENCES leads(id) ON DELETE CASCADE,
   file_name TEXT NOT NULL,
   file_path TEXT NOT NULL,
@@ -122,7 +122,7 @@ CREATE TABLE IF NOT EXISTS lead_attachments (
 -- Admin notes per lead
 -- ============================================================
 CREATE TABLE IF NOT EXISTS lead_notes (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   lead_id UUID NOT NULL REFERENCES leads(id) ON DELETE CASCADE,
   admin_id UUID NOT NULL REFERENCES admins(id) ON DELETE RESTRICT,
   note TEXT NOT NULL,
@@ -134,7 +134,7 @@ CREATE TABLE IF NOT EXISTS lead_notes (
 -- Immutable audit trail
 -- ============================================================
 CREATE TABLE IF NOT EXISTS lead_activities (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   lead_id UUID NOT NULL REFERENCES leads(id) ON DELETE CASCADE,
   admin_id UUID REFERENCES admins(id) ON DELETE SET NULL,
   activity_type TEXT NOT NULL CHECK (
@@ -155,7 +155,7 @@ CREATE TABLE IF NOT EXISTS lead_activities (
 -- General enquiries from /contact page
 -- ============================================================
 CREATE TABLE IF NOT EXISTS contact_messages (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name TEXT NOT NULL,
   email TEXT NOT NULL,
   phone TEXT,
