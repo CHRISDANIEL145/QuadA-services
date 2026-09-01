@@ -1,7 +1,6 @@
 'use server'
 
 import { createClient } from '@/lib/supabase/server'
-import { createServiceRoleClient } from '@/lib/supabase/admin'
 import { leadUpdateSchema, leadNoteSchema, serviceSchema, categorySchema, serviceAreaSchema } from '@/lib/validations'
 import type { ActionResult, LeadFilters, DashboardStats, Lead } from '@/types'
 import { redirect } from 'next/navigation'
@@ -17,8 +16,8 @@ async function requireAdmin() {
     redirect('/admin/login')
   }
 
-  const adminClient = createServiceRoleClient()
-  const { data: admin } = await adminClient
+  // Use the standard authenticated client to enforce RLS
+  const { data: admin } = await supabase
     .from('admins')
     .select('*')
     .eq('id', user.id)
@@ -29,7 +28,7 @@ async function requireAdmin() {
     redirect('/admin/login')
   }
 
-  return { user, admin, adminClient }
+  return { user, admin, supabase }
 }
 
 // ============================================================
@@ -68,9 +67,9 @@ export async function adminLogout(): Promise<ActionResult> {
 // ============================================================
 export async function getDashboardStats(): Promise<DashboardStats> {
   try {
-    const { adminClient } = await requireAdmin()
+    const { supabase } = await requireAdmin()
 
-    const { data, error } = await adminClient
+    const { data, error } = await supabase
       .from('leads')
       .select('status')
 
@@ -115,14 +114,14 @@ export async function getDashboardStats(): Promise<DashboardStats> {
 // ============================================================
 export async function getLeads(filters: LeadFilters = {}) {
   try {
-    const { adminClient } = await requireAdmin()
+    const { supabase } = await requireAdmin()
     const {
       search, status, priority, service_category_id, service_id,
       assigned_to, source, date_from, date_to,
       page = 1, page_size = 20,
     } = filters
 
-    let query = adminClient
+    let query = supabase
       .from('leads')
       .select(`
         *,
@@ -170,9 +169,9 @@ export async function getLeads(filters: LeadFilters = {}) {
 // ============================================================
 export async function getLead(id: string) {
   try {
-    const { adminClient } = await requireAdmin()
+    const { supabase } = await requireAdmin()
 
-    const { data, error } = await adminClient
+    const { data, error } = await supabase
       .from('leads')
       .select(`
         *,
@@ -195,9 +194,9 @@ export async function getLead(id: string) {
 // ============================================================
 export async function getLeadActivities(leadId: string) {
   try {
-    const { adminClient } = await requireAdmin()
+    const { supabase } = await requireAdmin()
 
-    const { data, error } = await adminClient
+    const { data, error } = await supabase
       .from('lead_activities')
       .select(`
         *,
@@ -218,9 +217,9 @@ export async function getLeadActivities(leadId: string) {
 // ============================================================
 export async function getLeadNotes(leadId: string) {
   try {
-    const { adminClient } = await requireAdmin()
+    const { supabase } = await requireAdmin()
 
-    const { data, error } = await adminClient
+    const { data, error } = await supabase
       .from('lead_notes')
       .select(`
         *,
@@ -241,9 +240,9 @@ export async function getLeadNotes(leadId: string) {
 // ============================================================
 export async function getLeadAttachments(leadId: string) {
   try {
-    const { adminClient } = await requireAdmin()
+    const { supabase } = await requireAdmin()
 
-    const { data, error } = await adminClient
+    const { data, error } = await supabase
       .from('lead_attachments')
       .select('*')
       .eq('lead_id', leadId)
@@ -261,9 +260,9 @@ export async function getLeadAttachments(leadId: string) {
 // ============================================================
 export async function getAttachmentSignedUrl(filePath: string): Promise<string | null> {
   try {
-    const { adminClient } = await requireAdmin()
+    const { supabase } = await requireAdmin()
 
-    const { data, error } = await adminClient.storage
+    const { data, error } = await supabase.storage
       .from('lead-attachments')
       .createSignedUrl(filePath, 3600) // 1 hour expiry
 
@@ -282,7 +281,7 @@ export async function updateLead(
   formData: unknown
 ): Promise<ActionResult> {
   try {
-    const { admin, adminClient } = await requireAdmin()
+    const { admin, supabase } = await requireAdmin()
 
     const parsed = leadUpdateSchema.safeParse(formData)
     if (!parsed.success) {
@@ -292,7 +291,7 @@ export async function updateLead(
     const data = parsed.data
 
     // Get current lead for comparison
-    const { data: currentLead } = await adminClient
+    const { data: currentLead } = await supabase
       .from('leads')
       .select('status, priority, assigned_to')
       .eq('id', leadId)
@@ -302,7 +301,7 @@ export async function updateLead(
       return { success: false, error: 'Lead not found.' }
     }
 
-    const { error } = await adminClient
+    const { error } = await supabase
       .from('leads')
       .update(data)
       .eq('id', leadId)
@@ -346,7 +345,7 @@ export async function updateLead(
     }
 
     if (activities.length > 0) {
-      await adminClient.from('lead_activities').insert(activities)
+      await supabase.from('lead_activities').insert(activities)
     }
 
     return { success: true }
@@ -364,14 +363,14 @@ export async function addLeadNote(
   formData: unknown
 ): Promise<ActionResult> {
   try {
-    const { admin, adminClient } = await requireAdmin()
+    const { admin, supabase } = await requireAdmin()
 
     const parsed = leadNoteSchema.safeParse(formData)
     if (!parsed.success) {
       return { success: false, error: 'Invalid note.' }
     }
 
-    const { error: noteError } = await adminClient.from('lead_notes').insert({
+    const { error: noteError } = await supabase.from('lead_notes').insert({
       lead_id: leadId,
       admin_id: admin.id,
       note: parsed.data.note,
@@ -382,7 +381,7 @@ export async function addLeadNote(
     }
 
     // Record activity
-    await adminClient.from('lead_activities').insert({
+    await supabase.from('lead_activities').insert({
       lead_id: leadId,
       admin_id: admin.id,
       activity_type: 'ADMIN_NOTE',
@@ -401,8 +400,8 @@ export async function addLeadNote(
 // ============================================================
 export async function getAdmins() {
   try {
-    const { adminClient } = await requireAdmin()
-    const { data, error } = await adminClient
+    const { supabase } = await requireAdmin()
+    const { data, error } = await supabase
       .from('admins')
       .select('id, full_name, email, role')
       .eq('is_active', true)
@@ -420,8 +419,8 @@ export async function getAdmins() {
 // ============================================================
 export async function getAdminServices() {
   try {
-    const { adminClient } = await requireAdmin()
-    const { data, error } = await adminClient
+    const { supabase } = await requireAdmin()
+    const { data, error } = await supabase
       .from('services')
       .select(`*, service_categories(id, name)`)
       .order('sort_order', { ascending: true })
@@ -438,8 +437,8 @@ export async function getAdminServices() {
 // ============================================================
 export async function getAdminCategories() {
   try {
-    const { adminClient } = await requireAdmin()
-    const { data, error } = await adminClient
+    const { supabase } = await requireAdmin()
+    const { data, error } = await supabase
       .from('service_categories')
       .select('*')
       .order('sort_order', { ascending: true })
@@ -459,7 +458,7 @@ export async function upsertService(
   serviceId?: string
 ): Promise<ActionResult<{ id: string }>> {
   try {
-    const { adminClient } = await requireAdmin()
+    const { supabase } = await requireAdmin()
 
     const parsed = serviceSchema.safeParse(formData)
     if (!parsed.success) {
@@ -473,7 +472,7 @@ export async function upsertService(
     }
 
     if (serviceId) {
-      const { error } = await adminClient
+      const { error } = await supabase
         .from('services')
         .update(parsed.data)
         .eq('id', serviceId)
@@ -481,7 +480,7 @@ export async function upsertService(
       if (error) return { success: false, error: 'Could not update service.' }
       return { success: true, data: { id: serviceId } }
     } else {
-      const { data, error } = await adminClient
+      const { data, error } = await supabase
         .from('services')
         .insert(parsed.data)
         .select('id')
@@ -503,7 +502,7 @@ export async function upsertCategory(
   categoryId?: string
 ): Promise<ActionResult<{ id: string }>> {
   try {
-    const { adminClient } = await requireAdmin()
+    const { supabase } = await requireAdmin()
 
     const parsed = categorySchema.safeParse(formData)
     if (!parsed.success) {
@@ -511,7 +510,7 @@ export async function upsertCategory(
     }
 
     if (categoryId) {
-      const { error } = await adminClient
+      const { error } = await supabase
         .from('service_categories')
         .update(parsed.data)
         .eq('id', categoryId)
@@ -519,7 +518,7 @@ export async function upsertCategory(
       if (error) return { success: false, error: 'Could not update category.' }
       return { success: true, data: { id: categoryId } }
     } else {
-      const { data, error } = await adminClient
+      const { data, error } = await supabase
         .from('service_categories')
         .insert(parsed.data)
         .select('id')
@@ -538,8 +537,8 @@ export async function upsertCategory(
 // ============================================================
 export async function getAdminServiceAreas() {
   try {
-    const { adminClient } = await requireAdmin()
-    const { data, error } = await adminClient
+    const { supabase } = await requireAdmin()
+    const { data, error } = await supabase
       .from('service_areas')
       .select('*')
       .order('name', { ascending: true })
@@ -559,7 +558,7 @@ export async function upsertServiceArea(
   areaId?: string
 ): Promise<ActionResult<{ id: string }>> {
   try {
-    const { adminClient } = await requireAdmin()
+    const { supabase } = await requireAdmin()
 
     const parsed = serviceAreaSchema.safeParse(formData)
     if (!parsed.success) {
@@ -567,7 +566,7 @@ export async function upsertServiceArea(
     }
 
     if (areaId) {
-      const { error } = await adminClient
+      const { error } = await supabase
         .from('service_areas')
         .update(parsed.data)
         .eq('id', areaId)
@@ -575,7 +574,7 @@ export async function upsertServiceArea(
       if (error) return { success: false, error: 'Could not update area.' }
       return { success: true, data: { id: areaId } }
     } else {
-      const { data, error } = await adminClient
+      const { data, error } = await supabase
         .from('service_areas')
         .insert(parsed.data)
         .select('id')
@@ -594,9 +593,9 @@ export async function upsertServiceArea(
 // ============================================================
 export async function getRecentActivities(limit = 10) {
   try {
-    const { adminClient } = await requireAdmin()
+    const { supabase } = await requireAdmin()
 
-    const { data, error } = await adminClient
+    const { data, error } = await supabase
       .from('lead_activities')
       .select(`
         *,
@@ -622,8 +621,8 @@ export async function getCurrentAdmin() {
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return null
 
-    const adminClient = createServiceRoleClient()
-    const { data } = await adminClient
+    
+    const { data } = await supabase
       .from('admins')
       .select('*')
       .eq('id', user.id)

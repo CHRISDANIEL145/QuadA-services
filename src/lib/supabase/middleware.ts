@@ -38,17 +38,42 @@ export async function updateSession(request: NextRequest) {
   const isAdminRoute = request.nextUrl.pathname.startsWith('/admin')
   const isAdminLogin = request.nextUrl.pathname === '/admin/login'
 
-  if (isAdminRoute && !isAdminLogin && !user) {
-    const url = request.nextUrl.clone()
-    url.pathname = '/admin/login'
-    return NextResponse.redirect(url)
+  if (isAdminRoute && !isAdminLogin) {
+    if (!user) {
+      const url = request.nextUrl.clone()
+      url.pathname = '/admin/login'
+      return NextResponse.redirect(url)
+    }
+
+    // Verify admin privileges via database
+    const { data: admin } = await supabase
+      .from('admins')
+      .select('id')
+      .eq('id', user.id)
+      .eq('is_active', true)
+      .single()
+
+    if (!admin) {
+      const url = request.nextUrl.clone()
+      url.pathname = '/'
+      return NextResponse.redirect(url)
+    }
   }
 
-  // If logged in and visiting login page, redirect to dashboard
+  // If logged in and visiting login page, redirect to dashboard if they are an admin
   if (isAdminLogin && user) {
-    const url = request.nextUrl.clone()
-    url.pathname = '/admin'
-    return NextResponse.redirect(url)
+    const { data: admin } = await supabase
+      .from('admins')
+      .select('id')
+      .eq('id', user.id)
+      .eq('is_active', true)
+      .single()
+
+    if (admin) {
+      const url = request.nextUrl.clone()
+      url.pathname = '/admin'
+      return NextResponse.redirect(url)
+    }
   }
 
   return supabaseResponse
