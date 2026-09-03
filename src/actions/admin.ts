@@ -1,6 +1,7 @@
 'use server'
 
 import { createClient } from '@/lib/supabase/server'
+import { createServiceRoleClient } from '@/lib/supabase/admin'
 import { leadUpdateSchema, leadNoteSchema, serviceSchema, categorySchema, serviceAreaSchema } from '@/lib/validations'
 import type { ActionResult, LeadFilters, DashboardStats, Lead } from '@/types'
 import { redirect } from 'next/navigation'

@@ -49,7 +49,6 @@ export async function submitEnquiry(
     }
 
     // Check if the user is authenticated (using regular client)
-    const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
     const customerId = user?.id || null
 

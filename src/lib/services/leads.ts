@@ -266,7 +266,7 @@ export async function queryLeadsByCategory(
   const counts: Record<string, { name: string; count: number }> = {}
   for (const row of data) {
     const id = row.service_category_id || 'unknown'
-    const name = (row as { service_categories?: { name: string } }).service_categories?.name || 'Other'
+    const name = (row as unknown as { service_categories?: { name: string } | null }).service_categories?.name || 'Other'
     if (!counts[id]) counts[id] = { name, count: 0 }
     counts[id].count++
   }
