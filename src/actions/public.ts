@@ -4,6 +4,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { enquirySchema, contactSchema } from '@/lib/validations'
 import type { ActionResult, Lead } from '@/types'
+import { headers } from 'next/headers'
 
 
 // ============================================================
@@ -16,13 +17,21 @@ export async function submitEnquiry(
   clientIp = 'unknown'
 ): Promise<ActionResult<{ lead_number: string; lead_id: string }>> {
   try {
-    // Rate limiting via Postgres
+    let ip = clientIp
+    if (ip === 'unknown') {
+      const headersList = await headers()
+      ip = headersList.get('x-forwarded-for') || headersList.get('x-real-ip') || 'unknown'
+    }
+
+    // Rate limiting via Postgres (bypass in development for easier testing)
     const supabase = await createClient()
-    const { data: limitOk } = await supabase.rpc('check_rate_limit', { client_ip: clientIp })
-    if (!limitOk) {
-      return {
-        success: false,
-        error: 'Too many requests. Please wait a moment before submitting again.',
+    if (process.env.NODE_ENV !== 'development') {
+      const { data: limitOk } = await supabase.rpc('check_rate_limit', { client_ip: ip })
+      if (!limitOk) {
+        return {
+          success: false,
+          error: 'Too many requests. Please wait a moment before submitting again.',
+        }
       }
     }
 
