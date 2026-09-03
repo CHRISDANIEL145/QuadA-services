@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import toast from 'react-hot-toast'
@@ -42,30 +43,27 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0A0F1C] flex items-center justify-center p-4">
+    <div className="min-h-screen bg-cream-50 flex items-center justify-center p-4">
       {/* Background pattern */}
       <div
-        className="absolute inset-0 opacity-[0.03]"
+        className="absolute inset-0 opacity-[0.05]"
         style={{
-          backgroundImage: `radial-gradient(circle at 1px 1px, #B8973E 1px, transparent 0)`,
+          backgroundImage: `radial-gradient(circle at 1px 1px, #354a76 1px, transparent 0)`,
           backgroundSize: '48px 48px',
         }}
         aria-hidden="true"
       />
 
-      <div className="relative w-full max-w-sm">
+      <div className="relative w-full max-w-lg">
         {/* Logo */}
         <div className="text-center mb-10">
-          <div className="w-12 h-12 rounded-2xl bg-[#B8973E] flex items-center justify-center text-white font-bold text-xl mx-auto mb-4">
-            Q
-          </div>
-          <h1 className="font-display text-2xl text-white mb-1">QuadA Services</h1>
-          <p className="text-white/40 text-sm">Admin Portal</p>
+          <h1 className="font-display text-3xl text-navy-900 mb-1 font-bold">QuadA Services</h1>
+          <p className="text-navy-500 text-base">Admin Portal</p>
         </div>
 
         {/* Form card */}
-        <div className="bg-white/[0.04] backdrop-blur-sm border border-white/10 rounded-2xl p-8">
-          <h2 className="text-white font-semibold text-lg mb-6">Sign in to continue</h2>
+        <div className="bg-white border-2 border-navy-500/30 rounded-3xl p-10 md:p-14 shadow-2xl shadow-navy-900/5">
+          <h2 className="text-navy-900 font-bold text-2xl mb-8 text-center">Sign in to continue</h2>
 
           <form
             onSubmit={handleSubmit(onSubmit)}
@@ -74,8 +72,8 @@ export default function AdminLoginPage() {
             aria-label="Admin login form"
           >
             {/* Email */}
-            <div className="form-field">
-              <label htmlFor="admin_email" className="text-white/70 text-sm font-medium">
+            <div className="form-field space-y-2">
+              <label htmlFor="admin_email" className="text-navy-700 text-base font-bold">
                 Email Address
               </label>
               <input
@@ -84,21 +82,21 @@ export default function AdminLoginPage() {
                 autoComplete="email"
                 placeholder="admin@quadaservices.com"
                 className={cn(
-                  'w-full px-4 py-3 rounded-xl bg-white/8 border text-white placeholder:text-white/20 outline-none transition-all duration-200',
+                  'w-full h-16 px-6 text-lg rounded-xl bg-cream-50 border-2 text-navy-900 placeholder:text-navy-500/50 outline-none transition-all duration-200 focus:ring-4 focus:ring-navy-600/20 focus:border-navy-500',
                   errors.email
-                    ? 'border-red-500/50 focus:border-red-400'
-                    : 'border-white/10 focus:border-white/30 focus:bg-white/12'
+                    ? 'border-red-500'
+                    : 'border-navy-500/30'
                 )}
                 {...register('email')}
               />
               {errors.email && (
-                <span className="text-red-400 text-xs" role="alert">{errors.email.message}</span>
+                <span className="text-red-500 text-sm font-medium" role="alert">{errors.email.message}</span>
               )}
             </div>
 
             {/* Password */}
-            <div className="form-field">
-              <label htmlFor="admin_password" className="text-white/70 text-sm font-medium">
+            <div className="form-field space-y-2">
+              <label htmlFor="admin_password" className="text-navy-700 text-base font-bold">
                 Password
               </label>
               <div className="relative">
@@ -108,51 +106,62 @@ export default function AdminLoginPage() {
                   autoComplete="current-password"
                   placeholder="••••••••"
                   className={cn(
-                    'w-full px-4 py-3 pr-11 rounded-xl bg-white/8 border text-white placeholder:text-white/20 outline-none transition-all duration-200',
+                    'w-full h-16 px-6 pr-14 text-lg rounded-xl bg-cream-50 border-2 text-navy-900 placeholder:text-navy-500/50 outline-none transition-all duration-200 focus:ring-4 focus:ring-navy-600/20 focus:border-navy-500',
                     errors.password
-                      ? 'border-red-500/50 focus:border-red-400'
-                      : 'border-white/10 focus:border-white/30 focus:bg-white/12'
+                      ? 'border-red-500'
+                      : 'border-navy-500/30'
                   )}
                   {...register('password')}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60 transition-colors p-1"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-navy-400 hover:text-navy-600 transition-colors p-2"
                   aria-label={showPassword ? 'Hide password' : 'Show password'}
                 >
-                  {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
               </div>
               {errors.password && (
-                <span className="text-red-400 text-xs" role="alert">{errors.password.message}</span>
+                <span className="text-red-500 text-sm font-medium" role="alert">{errors.password.message}</span>
               )}
             </div>
 
             {/* Submit */}
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              id="admin-login-btn"
-              className={cn(
-                'w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-medium text-sm transition-all duration-300',
-                isSubmitting
-                  ? 'bg-white/10 text-white/30 cursor-not-allowed'
-                  : 'bg-[#B8973E] text-white hover:bg-[#D4AF5C]'
-              )}
-            >
-              {isSubmitting ? (
-                <><Loader2 size={16} className="animate-spin" /> Signing in…</>
-              ) : (
-                'Sign In'
-              )}
-            </button>
+            <div className="pt-2">
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                id="admin-login-btn"
+                className={cn(
+                  'w-full flex items-center justify-center gap-3 h-16 rounded-xl font-bold uppercase tracking-wider text-base transition-all duration-300 hover:shadow-xl hover:shadow-navy-600/30 mt-2',
+                  isSubmitting
+                    ? 'bg-cream-200 text-navy-400 cursor-not-allowed'
+                    : 'bg-navy-600 text-white hover:bg-navy-700 active:scale-[0.98]'
+                )}
+              >
+                {isSubmitting ? (
+                  <><Loader2 size={20} className="animate-spin" /> Signing in…</>
+                ) : (
+                  'Sign In'
+                )}
+              </button>
+            </div>
           </form>
         </div>
 
-        <p className="text-center text-white/20 text-xs mt-6">
-          Admin access only. Customer registration is not available.
-        </p>
+        <div className="flex flex-col items-center mt-6 space-y-4">
+          <p className="text-center text-navy-500 text-sm font-medium">
+            Admin access only. Customer registration is not available.
+          </p>
+          
+          <Link
+            href="/login"
+            className="flex items-center justify-center w-full max-w-[200px] h-12 rounded-xl font-bold text-sm transition-all duration-300 border-2 border-navy-500/30 text-navy-600 hover:bg-navy-50"
+          >
+            Return to Customer
+          </Link>
+        </div>
       </div>
     </div>
   )

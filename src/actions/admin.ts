@@ -633,3 +633,131 @@ export async function getCurrentAdmin() {
     return null
   }
 }
+
+// ============================================================
+// DELETE LEAD (super admin only)
+// ============================================================
+export async function deleteLead(leadId: string): Promise<{ success: boolean; error?: string }> {
+  try {
+    const { admin } = await requireAdmin()
+    if (admin.role !== "super_admin") {
+      return { success: false, error: "Only super admins can delete leads." }
+    }
+    const supabase = await createClient()
+    const { error } = await supabase.from("leads").delete().eq("id", leadId)
+    if (error) return { success: false, error: error.message }
+    return { success: true }
+  } catch (err) {
+    return { success: false, error: err instanceof Error ? err.message : "Delete failed." }
+  }
+}
+
+// ============================================================
+// DELETE SERVICES
+// ============================================================
+export async function deleteServices(serviceIds: string[]): Promise<{ success: boolean; error?: string }> {
+  try {
+    const { admin } = await requireAdmin()
+    if (admin.role !== "super_admin") {
+      return { success: false, error: "Only super admins can delete services." }
+    }
+    
+    if (!serviceIds || serviceIds.length === 0) {
+      return { success: false, error: "No services selected." }
+    }
+
+    const supabase = await createClient()
+    const { error } = await supabase.from("services").delete().in("id", serviceIds)
+    if (error) return { success: false, error: error.message }
+    return { success: true }
+  } catch (err) {
+    return { success: false, error: err instanceof Error ? err.message : "Delete failed." }
+  }
+}
+
+// ============================================================
+// DELETE CATEGORIES
+// ============================================================
+export async function deleteCategories(categoryIds: string[]): Promise<{ success: boolean; error?: string }> {
+  try {
+    const { admin } = await requireAdmin()
+    if (admin.role !== "super_admin") {
+      return { success: false, error: "Only super admins can delete categories." }
+    }
+
+    if (!categoryIds || categoryIds.length === 0) {
+      return { success: false, error: "No categories selected." }
+    }
+
+    const supabase = await createClient()
+
+    // 1. First, delete all services belonging to these categories to prevent foreign key errors
+    const { error: servicesError } = await supabase.from("services").delete().in("category_id", categoryIds)
+    if (servicesError) {
+      return { success: false, error: "Failed to delete associated services: " + servicesError.message }
+    }
+
+    // 2. Then delete the categories themselves
+    const { error } = await supabase.from("service_categories").delete().in("id", categoryIds)
+    
+    if (error) {
+      return { success: false, error: error.message }
+    }
+    
+    return { success: true }
+  } catch (err) {
+    return { success: false, error: err instanceof Error ? err.message : "Delete failed." }
+  }
+}
+
+// ============================================================
+// MANUAL LEAD CREATION (admin)
+// ============================================================
+export async function createManualLead(data: {
+  customer_name: string
+  phone: string
+  email?: string
+  location: string
+  address?: string
+  service_category_id?: string
+  service_id?: string
+  requirement: string
+  budget?: string
+  preferred_date?: string
+  preferred_time?: string
+  priority: string
+  source: string
+  assigned_to?: string
+}): Promise<{ success: boolean; lead_number?: string; error?: string }> {
+  try {
+    await requireAdmin()
+    const adminClient = createServiceRoleClient()
+
+    const { data: lead, error } = await adminClient
+      .from("leads")
+      .insert({
+        customer_name: data.customer_name.trim(),
+        phone: data.phone.trim(),
+        email: data.email?.trim() || null,
+        location: data.location.trim(),
+        address: data.address?.trim() || null,
+        service_category_id: data.service_category_id || null,
+        service_id: data.service_id || null,
+        requirement: data.requirement.trim(),
+        budget: data.budget?.trim() || null,
+        preferred_date: data.preferred_date || null,
+        preferred_time: data.preferred_time || null,
+        priority: data.priority || "MEDIUM",
+        source: data.source || "DIRECT",
+        assigned_to: data.assigned_to || null,
+        status: "NEW",
+      })
+      .select("id, lead_number")
+      .single()
+
+    if (error) return { success: false, error: error.message }
+    return { success: true, lead_number: lead.lead_number }
+  } catch (err: any) {
+    return { success: false, error: err.message || "Failed to create lead." }
+  }
+}

@@ -57,6 +57,19 @@ CREATE TABLE IF NOT EXISTS services (
 );
 
 -- ============================================================
+-- CUSTOMERS TABLE
+-- Linked to Supabase Auth users
+-- ============================================================
+CREATE TABLE IF NOT EXISTS customers (
+  id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
+  email TEXT NOT NULL UNIQUE,
+  full_name TEXT NOT NULL,
+  phone TEXT,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+-- ============================================================
 -- SERVICE AREAS TABLE
 -- ============================================================
 CREATE TABLE IF NOT EXISTS service_areas (
@@ -80,6 +93,7 @@ CREATE SEQUENCE IF NOT EXISTS lead_number_seq START 1;
 CREATE TABLE IF NOT EXISTS leads (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   lead_number TEXT NOT NULL UNIQUE DEFAULT 'LEAD-' || LPAD(NEXTVAL('lead_number_seq')::TEXT, 6, '0'),
+  customer_id UUID REFERENCES customers(id) ON DELETE SET NULL,
   customer_name TEXT NOT NULL,
   phone TEXT NOT NULL,
   email TEXT,

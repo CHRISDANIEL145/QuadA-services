@@ -13,9 +13,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const service = await getServiceBySlug(slug)
   if (!service) return { title: 'Service Not Found' }
+  
+  const desc = `Submit your enquiry for ${service.name}. Our team will review your requirement and contact you within one business day.`
+  
   return {
     title: `Enquiry — ${service.name}`,
-    description: `Submit your enquiry for ${service.name}. Our team will review your requirement and contact you.`,
+    description: desc,
+    openGraph: {
+      title: `Enquiry — ${service.name} | Quad A Life Assist Connect 360°`,
+      description: desc,
+      type: 'website',
+    },
     robots: { index: false, follow: false },
   }
 }
@@ -31,11 +39,12 @@ export default async function ServiceEnquiryPage({ params }: Props) {
   if (!service) notFound()
 
   const category = (service as any).service_categories
+  const categorySlug: string | null = category?.slug || null
 
   return (
     <>
       {/* Header */}
-      <div className="bg-[#0D1526] pt-32 pb-12">
+      <div className="bg-[#0D1526] section-padding">
         <div className="container-site">
           <nav className="flex items-center gap-2 text-xs text-white/40 mb-6 flex-wrap" aria-label="Breadcrumb">
             <Link href="/" className="hover:text-white/70 transition-colors">Home</Link>
@@ -59,7 +68,7 @@ export default async function ServiceEnquiryPage({ params }: Props) {
       </div>
 
       {/* Form */}
-      <div className="bg-[#FAFAF8] py-16">
+      <div className="bg-[#FAFAF8] section-padding">
         <div className="container-site">
           <div className="grid lg:grid-cols-3 gap-12">
             {/* Form column */}
@@ -104,10 +113,10 @@ export default async function ServiceEnquiryPage({ params }: Props) {
                   Prefer to speak with someone? Call us directly and we'll help you place your enquiry.
                 </p>
                 <a
-                  href="tel:+919999999999"
+                  href="tel:+919655955777"
                   className="block text-center py-2.5 border border-[#DDD7CF] rounded-xl text-sm text-[#0D1526] hover:bg-[#F5F2EE] transition-colors"
                 >
-                  +91 99999 99999
+                  +91 96559 55777
                 </a>
               </div>
             </div>

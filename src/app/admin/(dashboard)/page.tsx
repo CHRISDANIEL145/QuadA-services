@@ -1,21 +1,31 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { ArrowRight, TrendingUp, Users, CheckCircle2, Clock, AlertCircle } from 'lucide-react'
+import { ArrowRight, TrendingUp, Users, CheckCircle2, Clock, Plus, AlertTriangle } from 'lucide-react'
 import { getDashboardStats, getRecentActivities } from '@/actions/admin'
 import { formatRelative } from '@/lib/utils'
 import { LEAD_STATUS_CONFIG } from '@/lib/utils'
+import { createServiceRoleClient } from '@/lib/supabase/admin'
 
 export const metadata: Metadata = { title: 'Dashboard' }
 
 export default async function AdminDashboardPage() {
-  const [stats, recentActivities] = await Promise.all([
+  const adminClient = createServiceRoleClient()
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+
+  const [stats, recentActivities, todayResult, urgentResult] = await Promise.all([
     getDashboardStats(),
     getRecentActivities(8),
+    adminClient.from('leads').select('id', { count: 'exact', head: true }).gte('created_at', today.toISOString()),
+    adminClient.from('leads').select('id, lead_number, customer_name, phone, status, created_at, service_categories(name)').eq('priority', 'URGENT').not('status', 'in', '(CONVERTED,COMPLETED,LOST,CANCELLED)').order('created_at', { ascending: false }).limit(5),
   ])
+
+  const newToday = todayResult.count || 0
+  const urgentLeads = urgentResult.data || []
 
   const kpis = [
     { label: 'Total Leads', value: stats.total, icon: Users, color: 'text-[#253969]', bg: 'bg-[#EEF4FB]' },
-    { label: 'New', value: stats.new, icon: AlertCircle, color: 'text-blue-600', bg: 'bg-blue-50' },
+    { label: 'New Today', value: newToday, icon: Plus, color: 'text-blue-600', bg: 'bg-blue-50' },
     { label: 'In Progress', value: stats.contacted + stats.qualified + stats.site_visit + stats.quotation + stats.follow_up, icon: Clock, color: 'text-amber-600', bg: 'bg-amber-50' },
     { label: 'Converted', value: stats.converted + stats.completed, icon: CheckCircle2, color: 'text-emerald-600', bg: 'bg-emerald-50' },
   ]
@@ -27,10 +37,48 @@ export default async function AdminDashboardPage() {
   return (
     <div className="p-8">
       {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-2xl font-semibold text-[#0D1526] mb-1">Dashboard</h1>
-        <p className="text-[#6B6254] text-sm">Overview of your lead management system.</p>
+      <div className="flex items-center justify-between mb-8">
+        <div>
+          <h1 className="text-2xl font-semibold text-[#0D1526] mb-1">Dashboard</h1>
+          <p className="text-[#6B6254] text-sm">Overview of your lead management system.</p>
+        </div>
+        <Link
+          href="/admin/leads/new"
+          id="dashboard-new-lead-btn"
+          className="flex items-center gap-1.5 px-4 py-2.5 bg-[#0D1526] text-white text-sm font-medium rounded-xl hover:bg-[#1C2D4F] transition-colors"
+        >
+          <Plus size={14} />
+          New Lead
+        </Link>
       </div>
+
+      {/* Urgent leads callout */}
+      {urgentLeads.length > 0 && (
+        <div className="bg-red-50 border border-red-100 rounded-2xl p-4 mb-6">
+          <div className="flex items-center gap-2 mb-3">
+            <AlertTriangle size={15} className="text-red-600" />
+            <span className="text-sm font-semibold text-red-700">{urgentLeads.length} Urgent Lead{urgentLeads.length > 1 ? 's' : ''} Require Attention</span>
+          </div>
+          <div className="space-y-2">
+            {urgentLeads.map((lead: any) => (
+              <Link
+                key={lead.id}
+                href={`/admin/leads/${lead.id}`}
+                className="flex items-center justify-between p-3 bg-white border border-red-100 rounded-xl hover:border-red-200 transition-colors"
+              >
+                <div className="flex items-center gap-3">
+                  <span className="font-mono text-xs text-red-500">{lead.lead_number}</span>
+                  <span className="text-sm font-medium text-[#0D1526]">{lead.customer_name}</span>
+                  {lead.service_categories && (
+                    <span className="text-xs text-[#A89E8E] hidden sm:block">{lead.service_categories.name}</span>
+                  )}
+                </div>
+                <ArrowRight size={13} className="text-red-400 shrink-0" />
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* KPI Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">

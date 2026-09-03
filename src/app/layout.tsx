@@ -1,49 +1,49 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter, Cormorant_Garamond } from 'next/font/google'
+import { Montserrat, Playfair_Display } from 'next/font/google'
 import { Toaster } from 'react-hot-toast'
 import './globals.css'
 
-const inter = Inter({
+const montserrat = Montserrat({
   subsets: ['latin'],
-  variable: '--font-inter',
+  variable: '--font-sans',
   display: 'swap',
 })
 
-const cormorant = Cormorant_Garamond({
+const playfair = Playfair_Display({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700'],
+  weight: ['400', '500', '600', '700'],
   style: ['normal', 'italic'],
-  variable: '--font-cormorant',
+  variable: '--font-display',
   display: 'swap',
 })
 
 export const metadata: Metadata = {
   title: {
-    default: 'QuadA Services — Professional Multi-Service Platform',
-    template: '%s | QuadA Services',
+    default: 'Quad A Life Assist Connect 360° — One Point. Every Service.',
+    template: '%s | Quad A Life Assist Connect 360°',
   },
   description:
-    'QuadA Services provides trusted home, cleaning, senior care, interior, real estate, and corporate services across Tamil Nadu. Submit your enquiry and our expert team will coordinate the right solution.',
+    'One customer contact. Every service need. Coordinated, followed up, and completed through a verified local partner network across Tirunelveli, Thoothukudi, Kanyakumari, Virudhunagar, and Tenkasi.',
   keywords: [
-    'home services', 'cleaning services', 'senior care', 'interior design',
-    'real estate assistance', 'corporate services', 'Tamil Nadu services',
-    'QuadA Services', 'home maintenance',
+    'home maintenance', 'senior care', 'event management', 'real estate solutions',
+    'financial advisory', 'personal supply', 'Quad A Life Assist', 'Tirunelveli services',
+    'Thoothukudi services', 'Kanyakumari services', 'Virudhunagar services', 'Tenkasi services',
   ],
-  authors: [{ name: 'QuadA Services' }],
-  creator: 'QuadA Services',
+  authors: [{ name: 'Bhrucelin Sahayaraj' }],
+  creator: 'Quad A Life Assist Connect 360°',
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'),
   openGraph: {
     type: 'website',
-    siteName: 'QuadA Services',
-    title: 'QuadA Services — Professional Multi-Service Platform',
+    siteName: 'Quad A Life Assist Connect 360°',
+    title: 'Quad A Life Assist Connect 360°',
     description:
-      'Trusted home, cleaning, senior care, interior, and real estate services across Tamil Nadu.',
+      'One customer contact. Every service need. Coordinated, followed up, and completed across 5 South Indian districts.',
     locale: 'en_IN',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'QuadA Services',
-    description: 'Professional multi-service platform for homes, offices, and care.',
+    title: 'Quad A Life Assist Connect 360°',
+    description: 'One Point. Every Service. Local. Reliable. Coordinated.',
   },
   robots: {
     index: true,
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#0D1526',
+  themeColor: '#050505',
 }
 
 export default function RootLayout({
@@ -66,27 +66,28 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${cormorant.variable}`}
+      className={`${montserrat.variable} ${playfair.variable}`}
       suppressHydrationWarning
     >
       <body className="font-sans antialiased">
         {children}
         <Toaster
-          position="top-right"
+          position="bottom-right"
           toastOptions={{
             duration: 4000,
             style: {
-              background: '#0D1526',
-              color: '#FAFAF8',
-              borderRadius: '10px',
+              background: '#0A0A0A',
+              color: '#F9F9F9',
+              border: '1px solid #333333',
+              borderRadius: '8px',
               fontSize: '0.875rem',
               padding: '0.75rem 1rem',
             },
             success: {
-              iconTheme: { primary: '#B8973E', secondary: '#FAFAF8' },
+              iconTheme: { primary: '#D4AF37', secondary: '#0A0A0A' },
             },
             error: {
-              iconTheme: { primary: '#ef4444', secondary: '#FAFAF8' },
+              iconTheme: { primary: '#ef4444', secondary: '#0A0A0A' },
             },
           }}
         />

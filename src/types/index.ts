@@ -6,6 +6,7 @@ export type AdminRole = 'super_admin' | 'admin' | 'manager' | 'staff'
 
 export interface Admin {
   id: string
+  user_id: string | null
   email: string
   full_name: string
   role: AdminRole
@@ -26,7 +27,7 @@ export interface ServiceCategory {
   updated_at: string
 }
 
-export type PricingType = 'fixed' | 'from' | 'range' | 'quote'
+export type PricingType = 'fixed' | 'from' | 'range' | 'quote' | 'hourly' | 'package'
 
 export interface ServiceEnquiryFieldOption {
   label: string
@@ -115,7 +116,7 @@ export interface Lead {
   status: LeadStatus
   priority: LeadPriority
   assigned_to: string | null
-  custom_fields: Record<string, string>
+  extra_fields: Record<string, string>
   created_at: string
   updated_at: string
   // Joined
@@ -199,7 +200,7 @@ export interface EnquiryFormData {
   requirement: string
   budget?: string
   source?: LeadSource
-  custom_fields?: Record<string, string>
+  extra_fields?: Record<string, string>
   honeypot?: string
 }
 

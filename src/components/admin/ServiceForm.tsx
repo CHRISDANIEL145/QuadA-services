@@ -172,10 +172,10 @@ export function ServiceForm({ categories, initialData }: Props) {
             className={cn('form-input', errors.pricing_type && 'form-input-error')}
             {...register('pricing_type')}
           >
+            <option value="quote">Custom Quote (Contact Us)</option>
             <option value="fixed">Fixed Price</option>
-            <option value="from">Starting From</option>
-            <option value="range">Price Range</option>
-            <option value="quote">Custom Quote</option>
+            <option value="hourly">Hourly Rate</option>
+            <option value="package">Package Deal</option>
           </select>
           {errors.pricing_type && <span className="form-error">{errors.pricing_type.message}</span>}
         </div>

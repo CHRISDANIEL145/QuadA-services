@@ -377,7 +377,7 @@ export function EnquiryForm({ service, category, categories, services }: Props) 
                     <select
                       id={`custom_${field.name}`}
                       className="form-input form-select"
-                      {...register(`custom_fields.${field.name}`)}
+                      {...register(`extra_fields.${field.name}`)}
                     >
                       <option value="">Select an option</option>
                       {field.options?.map((opt) => (
@@ -390,7 +390,7 @@ export function EnquiryForm({ service, category, categories, services }: Props) 
                       rows={3}
                       placeholder={field.placeholder}
                       className="form-input resize-none"
-                      {...register(`custom_fields.${field.name}`)}
+                      {...register(`extra_fields.${field.name}`)}
                     />
                   ) : (
                     <input
@@ -398,7 +398,7 @@ export function EnquiryForm({ service, category, categories, services }: Props) 
                       type={field.type}
                       placeholder={field.placeholder}
                       className="form-input"
-                      {...register(`custom_fields.${field.name}`)}
+                      {...register(`extra_fields.${field.name}`)}
                     />
                   )}
                 </div>

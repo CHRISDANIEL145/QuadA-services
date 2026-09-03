@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Navigation } from '@/components/navigation/Navigation'
 import { Footer } from '@/components/navigation/Footer'
+import { createClient } from '@/lib/supabase/server'
 
 export const metadata: Metadata = {
   title: {
@@ -9,18 +10,21 @@ export const metadata: Metadata = {
   },
 }
 
-export default function PublicLayout({
+export default async function PublicLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+
   return (
-    <>
-      <Navigation />
-      <main id="main-content" tabIndex={-1}>
+    <div className="flex flex-col min-h-screen">
+      <Navigation user={user} />
+      <main id="main-content" tabIndex={-1} className="flex-1 w-full">
         {children}
       </main>
       <Footer />
-    </>
+    </div>
   )
 }

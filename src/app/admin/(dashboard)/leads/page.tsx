@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { Search, Filter, ArrowRight, Phone, Mail } from 'lucide-react'
+import { Search, Filter, ArrowRight, Phone, Mail, Plus } from 'lucide-react'
 import { getLeads, getAdminCategories } from '@/actions/admin'
 import { formatDate, LEAD_STATUS_CONFIG, LEAD_PRIORITY_CONFIG } from '@/lib/utils'
 import { cn } from '@/lib/utils'
@@ -58,6 +58,14 @@ export default async function AdminLeadsPage({ searchParams }: Props) {
             {filters.search ? ` matching "${filters.search}"` : ''}
           </p>
         </div>
+        <Link
+          href="/admin/leads/new"
+          id="new-lead-btn"
+          className="flex items-center gap-1.5 px-4 py-2.5 bg-[#0D1526] text-white text-sm font-medium rounded-xl hover:bg-[#1C2D4F] transition-colors"
+        >
+          <Plus size={14} />
+          New Lead
+        </Link>
       </div>
 
       {/* Filters */}
@@ -69,13 +77,12 @@ export default async function AdminLeadsPage({ searchParams }: Props) {
       >
         {/* Search */}
         <div className="relative flex-1 min-w-[200px]">
-          <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#A89E8E]" aria-hidden="true" />
           <input
             type="search"
             name="search"
             defaultValue={params.search}
             placeholder="Search by name, phone, lead number…"
-            className="w-full pl-9 pr-4 py-2.5 text-sm rounded-xl border border-[#E5E9F2] bg-[#F8F9FC] focus:outline-none focus:border-[#253969]/40 focus:bg-white transition-all"
+            className="w-full px-4 py-2.5 text-sm rounded-xl border border-[#E5E9F2] bg-[#F8F9FC] focus:outline-none focus:border-[#253969]/40 focus:bg-white transition-all"
             aria-label="Search leads"
           />
         </div>

@@ -14,7 +14,7 @@ import type { ActionResult, Lead } from '@/types'
 export async function submitEnquiry(
   formData: unknown,
   clientIp = 'unknown'
-): Promise<ActionResult<{ lead_number: string }>> {
+): Promise<ActionResult<{ lead_number: string; lead_id: string }>> {
   try {
     // Rate limiting via Postgres
     const supabase = await createClient()
@@ -44,9 +44,14 @@ export async function submitEnquiry(
     if (data.honeypot && data.honeypot.length > 0) {
       return {
         success: true,
-        data: { lead_number: 'LEAD-000000' },
+        data: { lead_number: 'LEAD-000000', lead_id: '00000000-0000-0000-0000-000000000000' },
       }
     }
+
+    // Check if the user is authenticated (using regular client)
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    const customerId = user?.id || null
 
     // Use service role client to insert lead server-side
     // (We now reuse the supabase client created for rate limiting)
@@ -72,6 +77,7 @@ export async function submitEnquiry(
     const { data: lead, error } = await supabase
       .from('leads')
       .insert({
+        customer_id: customerId,
         customer_name: data.customer_name,
         phone: data.phone,
         email: data.email || null,
@@ -87,7 +93,7 @@ export async function submitEnquiry(
         status: 'NEW',
         priority: 'MEDIUM',
         assigned_to: null,
-        custom_fields: data.custom_fields || {},
+        extra_fields: data.extra_fields || {},
         honeypot: null, // Never store honeypot value
       })
       .select('id, lead_number')
@@ -112,7 +118,7 @@ export async function submitEnquiry(
 
     return {
       success: true,
-      data: { lead_number: lead.lead_number },
+      data: { lead_number: lead.lead_number, lead_id: lead.id },
     }
   } catch (err) {
     console.error('submitEnquiry error:', err)

@@ -1,13 +1,17 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
+import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, Phone, ChevronRight } from 'lucide-react'
+import { Menu, X, Phone } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import type { User } from '@supabase/supabase-js'
+import { customerSignOut } from '@/actions/customer-auth'
+import toast from 'react-hot-toast'
 
-const navLinks = [
+const baseNavLinks = [
   { href: '/', label: 'Home' },
   { href: '/services', label: 'Services' },
   { href: '/service-areas', label: 'Service Areas' },
@@ -15,10 +19,11 @@ const navLinks = [
   { href: '/contact', label: 'Contact' },
 ]
 
-export function Navigation() {
+export function Navigation({ user }: { user: User | null }) {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
+  const router = useRouter()
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40)
@@ -27,7 +32,27 @@ export function Navigation() {
   }, [])
 
   // Close mobile menu on route change
-  useEffect(() => { setIsOpen(false) }, [pathname])
+  useEffect(() => { setTimeout(() => setIsOpen(false), 0) }, [pathname])
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+    return () => { document.body.style.overflow = 'unset' }
+  }, [isOpen])
+
+  const handleSignOut = async () => {
+    const res = await customerSignOut()
+    if (res.success) {
+      toast.success('Signed out successfully')
+      router.refresh()
+    } else {
+      toast.error('Failed to sign out')
+    }
+  }
 
   const isHeroPage = pathname === '/'
 
@@ -35,9 +60,9 @@ export function Navigation() {
     <>
       <header
         className={cn(
-          'fixed top-0 left-0 right-0 z-[100] transition-all duration-500',
+          'fixed top-0 left-0 right-0 z-[100] transition-all duration-300',
           scrolled || !isHeroPage
-            ? 'bg-[#0D1526]/95 backdrop-blur-md border-b border-white/10 shadow-lg shadow-black/20'
+            ? 'bg-white/80 backdrop-blur-xl border-b border-cream-200 shadow-sm'
             : 'bg-transparent'
         )}
         role="banner"
@@ -52,63 +77,112 @@ export function Navigation() {
             className="flex items-center gap-3 group"
             aria-label="QuadA Services — Home"
           >
-            <div className="w-8 h-8 rounded-lg bg-[#B8973E] flex items-center justify-center text-white font-bold text-sm tracking-tight transition-transform group-hover:scale-110">
-              Q
+            <div className={cn(
+              "relative w-10 h-10 overflow-hidden rounded-full bg-white flex-shrink-0 transition-all duration-300 border-2",
+              scrolled || !isHeroPage ? "border-cream-200" : "border-white/30"
+            )}>
+              <Image src="/new-logo.png" alt="Quad A Logo" fill className="object-cover" />
             </div>
-            <span className="text-white font-semibold text-lg tracking-tight leading-none">
-              QuadA
-              <span className="block text-[10px] font-normal text-white/50 tracking-widest uppercase -mt-0.5">
-                Services
+            <span className={cn(
+              "font-semibold text-lg tracking-tight",
+              scrolled || !isHeroPage ? "text-navy-900" : "text-white"
+            )}>
+              Quad A
+              <span className={cn(
+                "block text-[10px] font-medium mt-0.5 opacity-70",
+                scrolled || !isHeroPage ? "text-navy-500" : "text-white/70"
+              )}>
+                Life Assist
               </span>
             </span>
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden lg:flex items-center gap-1">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
+          <div className="hidden lg:flex items-center gap-6">
+            {baseNavLinks.map((link) => {
+              const isActive = pathname === link.href;
+              const linkColor = scrolled || !isHeroPage 
+                ? (isActive ? 'text-navy-900 bg-cream-100' : 'text-navy-600 hover:text-navy-900 hover:bg-cream-50')
+                : (isActive ? 'text-white bg-white/10' : 'text-white/80 hover:text-white hover:bg-white/10');
+                
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={cn(
+                    'px-4 py-2 text-sm font-medium rounded-md transition-all duration-200',
+                    linkColor
+                  )}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
+            
+            {/* Auth Link */}
+            {user ? (
+              <button
+                onClick={handleSignOut}
                 className={cn(
-                  'px-4 py-2 text-sm rounded-lg transition-all duration-200',
-                  pathname === link.href
-                    ? 'text-[#B8973E] bg-white/10'
-                    : 'text-white/70 hover:text-white hover:bg-white/10'
+                  'px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 flex items-center gap-2',
+                  scrolled || !isHeroPage ? 'text-navy-600 hover:text-navy-900 hover:bg-cream-50' : 'text-white/80 hover:text-white hover:bg-white/10'
                 )}
               >
-                {link.label}
+                Sign Out
+              </button>
+            ) : (
+              <Link
+                href="/login"
+                className={cn(
+                  'px-4 py-2 text-sm font-medium rounded-md transition-all duration-200',
+                  pathname === '/login'
+                    ? (scrolled || !isHeroPage ? 'text-navy-900 bg-cream-100' : 'text-white bg-white/10')
+                    : (scrolled || !isHeroPage ? 'text-navy-600 hover:text-navy-900 hover:bg-cream-50' : 'text-white/80 hover:text-white hover:bg-white/10')
+                )}
+              >
+                Login
               </Link>
-            ))}
+            )}
           </div>
 
           {/* CTA */}
-          <div className="hidden lg:flex items-center gap-3">
+          <div className="hidden lg:flex items-center gap-4">
             <a
-              href="tel:+919999999999"
-              className="flex items-center gap-2 text-white/70 hover:text-white text-sm transition-colors"
+              href="tel:+919655955777"
+              className={cn(
+                "flex items-center gap-2 text-sm font-medium transition-colors duration-200",
+                scrolled || !isHeroPage ? "text-navy-600 hover:text-navy-900" : "text-white/80 hover:text-white"
+              )}
               aria-label="Call us"
             >
-              <Phone size={15} />
-              <span>+91 99999 99999</span>
+              <Phone size={16} />
+              <span>+91 96559 55777</span>
             </a>
             <Link
               href="/services"
-              className="flex items-center gap-1.5 px-5 py-2.5 bg-[#B8973E] text-white text-sm font-medium rounded-lg hover:bg-[#D4AF5C] transition-all duration-200 hover:shadow-lg hover:shadow-[#B8973E]/30"
+              className={cn(
+                "flex items-center gap-2 px-5 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 shadow-sm",
+                scrolled || !isHeroPage 
+                  ? "bg-navy-900 text-white hover:bg-navy-800"
+                  : "bg-white text-navy-900 hover:bg-white/90"
+              )}
             >
               Explore Services
-              <ChevronRight size={14} />
             </Link>
           </div>
 
           {/* Mobile menu button */}
           <button
-            className="lg:hidden p-2 rounded-lg text-white/80 hover:text-white hover:bg-white/10 transition-all"
+            className={cn(
+              "lg:hidden p-2 rounded-md transition-colors",
+              scrolled || !isHeroPage ? "text-navy-600 hover:bg-cream-100" : "text-white hover:bg-white/10"
+            )}
             onClick={() => setIsOpen(!isOpen)}
             aria-label={isOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={isOpen}
             aria-controls="mobile-menu"
           >
-            {isOpen ? <X size={22} /> : <Menu size={22} />}
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </nav>
       </header>
@@ -118,19 +192,19 @@ export function Navigation() {
         {isOpen && (
           <motion.div
             id="mobile-menu"
-            initial={{ opacity: 0, y: -8 }}
+            initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.2, ease: 'easeOut' }}
-            className="fixed inset-0 z-[99] bg-[#0D1526]"
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-[99] bg-white border-b border-cream-200 overflow-y-auto"
             role="dialog"
             aria-modal="true"
             aria-label="Mobile navigation"
           >
-            <div className="container-site pt-20 pb-8">
+            <div className="container-site pt-24 pb-8 min-h-full flex flex-col">
               {/* Nav links */}
-              <div className="flex flex-col gap-1 mt-8">
-                {navLinks.map((link, i) => (
+              <div className="flex flex-col gap-2 mt-4 flex-1">
+                {baseNavLinks.map((link, i) => (
                   <motion.div
                     key={link.href}
                     initial={{ opacity: 0, x: -16 }}
@@ -140,32 +214,61 @@ export function Navigation() {
                     <Link
                       href={link.href}
                       className={cn(
-                        'block px-4 py-3.5 text-lg rounded-xl transition-all',
+                        'block px-4 py-3 text-lg font-medium rounded-lg transition-colors',
                         pathname === link.href
-                          ? 'text-[#B8973E] bg-white/10'
-                          : 'text-white/80 hover:text-white hover:bg-white/10'
+                          ? 'text-navy-900 bg-cream-50'
+                          : 'text-navy-600 hover:text-navy-900 hover:bg-cream-50'
                       )}
                     >
                       {link.label}
                     </Link>
                   </motion.div>
                 ))}
+
+                <motion.div
+                  initial={{ opacity: 0, x: -16 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: baseNavLinks.length * 0.05 + 0.1 }}
+                >
+                  {user ? (
+                    <button
+                      onClick={() => {
+                        handleSignOut()
+                        setIsOpen(false)
+                      }}
+                      className="w-full text-left px-4 py-3 text-lg font-medium rounded-lg transition-colors text-red-600 hover:text-red-700 hover:bg-red-50"
+                    >
+                      Sign Out
+                    </button>
+                  ) : (
+                    <Link
+                      href="/login"
+                      className={cn(
+                        'block px-4 py-3 text-lg font-medium rounded-lg transition-colors',
+                        pathname === '/login'
+                          ? 'text-navy-900 bg-cream-50'
+                          : 'text-navy-600 hover:text-navy-900 hover:bg-cream-50'
+                      )}
+                    >
+                      Login
+                    </Link>
+                  )}
+                </motion.div>
               </div>
 
-              <div className="mt-8 pt-8 border-t border-white/10 flex flex-col gap-4">
+              <div className="mt-8 pt-6 border-t border-cream-200 flex flex-col gap-4">
                 <a
-                  href="tel:+919999999999"
-                  className="flex items-center gap-3 text-white/70 text-base"
+                  href="tel:+919655955777"
+                  className="flex items-center justify-center gap-2 text-navy-600 font-medium py-3 hover:text-navy-900 transition-colors"
                 >
-                  <Phone size={16} />
-                  +91 99999 99999
+                  <Phone size={18} />
+                  +91 96559 55777
                 </a>
                 <Link
                   href="/services"
-                  className="flex items-center justify-center gap-2 px-6 py-3.5 bg-[#B8973E] text-white font-medium rounded-xl"
+                  className="flex items-center justify-center w-full py-4 bg-navy-900 text-white rounded-xl font-medium hover:bg-navy-800 transition-colors"
                 >
                   Explore Services
-                  <ChevronRight size={16} />
                 </Link>
               </div>
             </div>

@@ -35,7 +35,7 @@ export const enquirySchema = z.object({
     .enum(['WEBSITE', 'GOOGLE', 'SOCIAL_MEDIA', 'REFERRAL', 'DIRECT', 'OTHER'])
     .optional()
     .default('WEBSITE'),
-  custom_fields: z.record(z.string().max(500)).optional().default({}),
+  extra_fields: z.record(z.string().max(500)).optional().default({}),
   honeypot: z.string().max(0, 'Spam detected').optional().or(z.literal('')),
 })
 
@@ -124,7 +124,7 @@ export const serviceSchema = z.object({
   description: z.string().max(5000).optional().or(z.literal('')),
   image_url: z.string().url().optional().or(z.literal('')),
   display_price: z.string().max(100).optional().or(z.literal('')),
-  pricing_type: z.enum(['fixed', 'from', 'range', 'quote']).default('quote'),
+  pricing_type: z.enum(['fixed', 'from', 'range', 'quote', 'hourly', 'package']).default('quote'),
   is_active: z.boolean().default(true),
   sort_order: z.number().int().min(0).default(0),
 })
@@ -159,3 +159,22 @@ export const serviceAreaSchema = z.object({
 })
 
 export type ServiceAreaSchema = z.infer<typeof serviceAreaSchema>
+
+// ============================================================
+// Customer Auth Schemas
+// ============================================================
+export const customerLoginSchema = z.object({
+  email: z.string().email('Please enter a valid email address').trim(),
+  password: z.string().min(6, 'Password must be at least 6 characters'),
+})
+
+export type CustomerLoginSchema = z.infer<typeof customerLoginSchema>
+
+export const customerSignUpSchema = z.object({
+  full_name: z.string().min(2, 'Name must be at least 2 characters').max(100, 'Name is too long').trim(),
+  email: z.string().email('Please enter a valid email address').trim(),
+  phone: z.string().min(10, 'Please enter a valid phone number').max(20, 'Phone number is too long').trim(),
+  password: z.string().min(6, 'Password must be at least 6 characters'),
+})
+
+export type CustomerSignUpSchema = z.infer<typeof customerSignUpSchema>

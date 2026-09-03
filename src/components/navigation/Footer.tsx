@@ -1,14 +1,8 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { Phone, Mail, MapPin, ArrowRight } from 'lucide-react'
 
-const serviceLinks = [
-  { href: '/services/home-maintenance', label: 'Home & Maintenance' },
-  { href: '/services/cleaning-housekeeping', label: 'Cleaning Services' },
-  { href: '/services/senior-citizen-assistance', label: 'Senior Care' },
-  { href: '/services/interior-renovation', label: 'Interior & Renovation' },
-  { href: '/services/real-estate-property', label: 'Real Estate' },
-  { href: '/services/event-travel-services', label: 'Events & Travel' },
-]
+import type { ServiceCategory } from '@/types'
 
 const companyLinks = [
   { href: '/about', label: 'About Us' },
@@ -18,85 +12,61 @@ const companyLinks = [
   { href: '/terms', label: 'Terms of Service' },
 ]
 
-export function Footer() {
+export async function Footer() {
   return (
     <footer
-      className="bg-[#0A0F1C] text-white/70"
+      className="bg-[#0D1526] border-t border-white/5"
       role="contentinfo"
       aria-label="Site footer"
     >
-      <div className="container-site py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+      <div className="container-site section-padding-sm">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
           {/* Brand */}
           <div className="lg:col-span-1">
-            <div className="flex items-center gap-3 mb-5">
-              <div className="w-8 h-8 rounded-lg bg-[#B8973E] flex items-center justify-center text-white font-bold text-sm">
-                Q
+            <div className="flex items-center gap-3 mb-6">
+              <div className="relative w-12 h-12 overflow-hidden rounded-full bg-white flex-shrink-0">
+                <Image src="/new-logo.png" alt="Quad A Logo" fill className="object-cover" />
               </div>
               <div>
-                <div className="text-white font-semibold text-base leading-none">QuadA</div>
-                <div className="text-[10px] text-white/40 tracking-widest uppercase">Services</div>
+                <div className="text-white font-semibold text-lg tracking-tight leading-none">Quad A</div>
+                <div className="text-[10px] text-white/60 font-medium mt-0.5">Life Assist Connect 360°</div>
               </div>
             </div>
-            <p className="text-sm leading-relaxed text-white/50 mb-6">
-              Connecting you with trusted professionals for every home, office, and personal service need across Tamil Nadu.
+            <p className="text-sm leading-relaxed text-white/70 mb-6">
+              One point. Every service. Trusted coordination across Tirunelveli, Thoothukudi, Kanyakumari, Virudhunagar & Tenkasi.
             </p>
             <div className="flex flex-col gap-3">
               <a
-                href="tel:+919999999999"
-                className="flex items-center gap-2.5 text-sm hover:text-white transition-colors"
+                href="tel:+919655955777"
+                className="flex items-center gap-3 text-sm text-white/70 hover:text-white transition-colors"
               >
-                <Phone size={14} className="text-[#B8973E]" />
-                +91 99999 99999
+                <Phone size={16} className="text-cream-300" />
+                +91 96559 55777
               </a>
               <a
-                href="mailto:hello@quadaservices.com"
-                className="flex items-center gap-2.5 text-sm hover:text-white transition-colors"
+                href="mailto:bruce_mba07@yahoo.co.in"
+                className="flex items-center gap-3 text-sm text-white/70 hover:text-white transition-colors"
               >
-                <Mail size={14} className="text-[#B8973E]" />
-                hello@quadaservices.com
+                <Mail size={16} className="text-cream-300" />
+                bruce_mba07@yahoo.co.in
               </a>
-              <div className="flex items-start gap-2.5 text-sm">
-                <MapPin size={14} className="text-[#B8973E] mt-0.5 shrink-0" />
-                <span>Tamil Nadu, India</span>
+              <div className="flex items-start gap-3 text-sm text-white/70">
+                <MapPin size={16} className="text-cream-300 mt-0.5 shrink-0" />
+                <span>Tirunelveli, Tamil Nadu</span>
               </div>
             </div>
           </div>
 
-          {/* Services */}
-          <div>
-            <h3 className="text-white font-medium text-sm uppercase tracking-widest mb-5">
-              Services
-            </h3>
-            <ul className="flex flex-col gap-2.5" role="list">
-              {serviceLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm hover:text-white transition-colors flex items-center gap-1.5 group"
-                  >
-                    <ArrowRight
-                      size={12}
-                      className="opacity-0 group-hover:opacity-100 transition-opacity text-[#B8973E]"
-                    />
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
 
           {/* Company */}
           <div>
-            <h3 className="text-white font-medium text-sm uppercase tracking-widest mb-5">
-              Company
-            </h3>
-            <ul className="flex flex-col gap-2.5" role="list">
+            <h3 className="text-white font-semibold text-sm mb-6">Company</h3>
+            <ul className="space-y-3" role="list">
               {companyLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm hover:text-white transition-colors"
+                    className="text-sm text-white/70 hover:text-white transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -107,33 +77,33 @@ export function Footer() {
 
           {/* Enquiry CTA */}
           <div>
-            <h3 className="text-white font-medium text-sm uppercase tracking-widest mb-5">
+            <h3 className="text-white font-semibold text-sm mb-4">
               Need a Service?
             </h3>
-            <p className="text-sm text-white/50 leading-relaxed mb-5">
+            <p className="text-sm text-white/70 leading-relaxed mb-5">
               Tell us what you need. Our team reviews every enquiry and responds promptly.
             </p>
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 px-5 py-3 bg-[#B8973E] text-white text-sm font-medium rounded-lg hover:bg-[#D4AF5C] transition-all duration-200"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-[#0D1526] text-sm font-semibold rounded-lg hover:bg-cream-50 transition-colors"
             >
               Send Enquiry
-              <ArrowRight size={14} />
+              <ArrowRight size={16} />
             </Link>
           </div>
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-16 pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-xs text-white/30">
-            © {new Date().getFullYear()} QuadA Services. All rights reserved.
+        <div className="border-t border-white/10 py-6 mt-16 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-sm text-white/50">
+            © {new Date().getFullYear()} Quad A Services. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
-            <Link href="/privacy" className="text-xs text-white/30 hover:text-white/60 transition-colors">
-              Privacy
+            <Link href="/privacy" className="text-sm text-white/50 hover:text-white transition-colors">
+              Privacy Policy
             </Link>
-            <Link href="/terms" className="text-xs text-white/30 hover:text-white/60 transition-colors">
-              Terms
+            <Link href="/terms" className="text-sm text-white/50 hover:text-white transition-colors">
+              Terms of Service
             </Link>
           </div>
         </div>

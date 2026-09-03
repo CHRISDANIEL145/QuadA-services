@@ -155,7 +155,7 @@ export const ALLOWED_FILE_TYPES = [
   'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
 ]
 
-export const MAX_FILE_SIZE = 10 * 1024 * 1024 // 10MB
+export const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5MB
 
 export function isValidFileType(file: File): boolean {
   return ALLOWED_FILE_TYPES.includes(file.type)
@@ -207,3 +207,4 @@ export const SOURCE_LABELS: Record<string, string> = {
   DIRECT: 'Direct',
   OTHER: 'Other',
 }
+

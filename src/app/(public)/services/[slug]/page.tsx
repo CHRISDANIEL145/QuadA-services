@@ -32,53 +32,53 @@ export default async function ServiceDetailPage({ params }: Props) {
   return (
     <>
       {/* Hero */}
-      <div className="bg-[#0D1526] pt-32 pb-16">
+      <div className="bg-cream-50 section-padding border-b border-cream-200">
         <div className="container-site">
-          <nav className="flex items-center gap-2 text-xs text-white/40 mb-6 flex-wrap" aria-label="Breadcrumb">
-            <Link href="/" className="hover:text-white/70 transition-colors">Home</Link>
+          <nav className="flex items-center gap-2 text-[10px] uppercase tracking-widest font-semibold text-navy-500 mb-8 flex-wrap" aria-label="Breadcrumb">
+            <Link href="/" className="hover:text-navy-900 transition-colors">Home</Link>
             <ChevronRight size={12} />
-            <Link href="/services" className="hover:text-white/70 transition-colors">Services</Link>
+            <Link href="/services" className="hover:text-navy-900 transition-colors">Services</Link>
             {category && (
               <>
                 <ChevronRight size={12} />
-                <span className="text-white/40">{category.name}</span>
+                <span className="text-navy-500">{category.name}</span>
               </>
             )}
             <ChevronRight size={12} />
-            <span className="text-white/60">{service.name}</span>
+            <span className="text-navy-900">{service.name}</span>
           </nav>
 
           <div className="grid lg:grid-cols-2 gap-12 items-end">
             <div>
               {category && (
-                <span className="inline-block px-3 py-1 rounded-full bg-white/10 text-[#B8973E] text-xs font-medium mb-4">
+                <span className="inline-block px-4 py-1.5 border border-cream-200 bg-white text-navy-600 text-[10px] uppercase tracking-widest font-semibold mb-6 rounded-full shadow-sm">
                   {category.name}
                 </span>
               )}
-              <h1 className="font-display text-4xl md:text-6xl text-white tracking-tight leading-tight mb-4">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-navy-900 tracking-tight leading-tight mb-6">
                 {service.name}
               </h1>
               {service.short_description && (
-                <p className="text-white/60 text-lg leading-relaxed">
+                <p className="text-navy-600 text-sm md:text-lg max-w-xl leading-relaxed">
                   {service.short_description}
                 </p>
               )}
             </div>
 
-            <div className="flex flex-col items-start lg:items-end gap-4">
+            <div className="flex flex-col items-start lg:items-end gap-6">
               {service.display_price && (
-                <div className="text-center lg:text-right">
-                  <div className="text-white/40 text-xs uppercase tracking-widest mb-1">Pricing</div>
-                  <div className="text-white text-2xl font-medium">{service.display_price}</div>
+                <div className="text-left lg:text-right">
+                  <div className="text-navy-500 text-[10px] font-semibold uppercase tracking-widest mb-2">Pricing Structure</div>
+                  <div className="text-navy-900 text-xl font-bold tracking-tight">{service.display_price}</div>
                 </div>
               )}
               <Link
                 href={`/services/${service.slug}/enquiry`}
                 id="service-enquiry-cta-top"
-                className="inline-flex items-center gap-2.5 px-8 py-4 bg-[#B8973E] text-white font-medium text-base rounded-xl hover:bg-[#D4AF5C] transition-all duration-300 hover:shadow-xl hover:shadow-[#B8973E]/25"
+                className="group inline-flex items-center gap-3 px-8 py-4 bg-navy-900 text-white font-semibold text-sm rounded-lg hover:bg-navy-800 transition-all duration-300 w-full sm:w-auto justify-center shadow-sm hover:shadow-md"
               >
                 Request This Service
-                <ArrowRight size={16} />
+                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform duration-300" />
               </Link>
             </div>
           </div>
@@ -86,18 +86,18 @@ export default async function ServiceDetailPage({ params }: Props) {
       </div>
 
       {/* Main content */}
-      <div className="bg-[#FAFAF8] py-16">
+      <div className="bg-white section-padding">
         <div className="container-site">
-          <div className="grid lg:grid-cols-3 gap-12">
+          <div className="grid lg:grid-cols-3 gap-12 lg:gap-16">
             {/* Main content */}
-            <div className="lg:col-span-2 space-y-12">
+            <div className="lg:col-span-2 space-y-16">
               {/* Description */}
               {service.description && (
                 <section aria-labelledby="about-heading">
-                  <h2 id="about-heading" className="font-display text-2xl text-[#0D1526] mb-4">
-                    About This Service
+                  <h2 id="about-heading" className="text-2xl md:text-3xl font-bold text-navy-900 mb-6 tracking-tight">
+                    About This <span className="text-transparent bg-clip-text bg-gradient-to-r from-navy-900 to-navy-500">Service</span>
                   </h2>
-                  <div className="text-[#6B6254] leading-relaxed whitespace-pre-wrap">
+                  <div className="text-navy-600 text-sm md:text-base leading-relaxed whitespace-pre-wrap">
                     {service.description}
                   </div>
                 </section>
@@ -105,10 +105,10 @@ export default async function ServiceDetailPage({ params }: Props) {
 
               {/* What's included */}
               <section aria-labelledby="included-heading">
-                <h2 id="included-heading" className="font-display text-2xl text-[#0D1526] mb-6">
-                  What&apos;s Included
+                <h2 id="included-heading" className="text-2xl md:text-3xl font-bold text-navy-900 mb-8 tracking-tight">
+                  What&apos;s <span className="text-transparent bg-clip-text bg-gradient-to-r from-navy-900 to-navy-500">Included</span>
                 </h2>
-                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3" role="list">
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4" role="list">
                   {[
                     'Professional assessment of your requirements',
                     'Skilled and verified service professionals',
@@ -118,8 +118,8 @@ export default async function ServiceDetailPage({ params }: Props) {
                     'Transparent communication throughout',
                   ].map((item) => (
                     <li key={item} className="flex items-start gap-3">
-                      <CheckCircle2 size={16} className="text-[#B8973E] mt-0.5 shrink-0" aria-hidden="true" />
-                      <span className="text-[#6B6254] text-sm">{item}</span>
+                      <CheckCircle2 size={18} className="text-navy-900 mt-1 shrink-0" aria-hidden="true" />
+                      <span className="text-navy-600 text-sm md:text-base leading-relaxed">{item}</span>
                     </li>
                   ))}
                 </ul>
@@ -128,15 +128,15 @@ export default async function ServiceDetailPage({ params }: Props) {
               {/* Service areas */}
               {areas.length > 0 && (
                 <section aria-labelledby="areas-heading">
-                  <h2 id="areas-heading" className="font-display text-2xl text-[#0D1526] mb-6 flex items-center gap-2">
-                    <MapPin size={20} className="text-[#B8973E]" aria-hidden="true" />
-                    Service Areas
+                  <h2 id="areas-heading" className="text-2xl md:text-3xl font-bold text-navy-900 mb-8 flex items-center gap-3 tracking-tight">
+                    <MapPin size={24} className="text-navy-900" aria-hidden="true" />
+                    Service <span className="text-transparent bg-clip-text bg-gradient-to-r from-navy-900 to-navy-500">Areas</span>
                   </h2>
                   <div className="flex flex-wrap gap-2">
                     {areas.map((area: any) => (
                       <span
                         key={area.id}
-                        className="px-3 py-1.5 rounded-lg bg-white border border-[#DDD7CF] text-[#0D1526] text-sm"
+                        className="px-4 py-2 bg-cream-50 border border-cream-200 text-navy-700 text-xs font-medium rounded-full shadow-sm hover:border-cream-200 hover:bg-cream-100 transition-colors duration-300"
                       >
                         {area.name}
                       </span>
@@ -147,36 +147,36 @@ export default async function ServiceDetailPage({ params }: Props) {
             </div>
 
             {/* Sidebar */}
-            <div className="space-y-6">
+            <div className="space-y-6 relative z-10">
               {/* Enquiry card */}
-              <div className="bg-[#0D1526] rounded-2xl p-6 sticky top-24">
-                <h3 className="font-display text-xl text-white mb-2">
-                  Request This Service
+              <div className="bg-white border border-cream-200 rounded-xl p-8 sticky top-32 shadow-sm">
+                <h3 className="font-bold text-xl text-navy-900 mb-3 tracking-tight">
+                  Request <span className="text-transparent bg-clip-text bg-gradient-to-r from-navy-900 to-navy-500">Service</span>
                 </h3>
-                <p className="text-white/50 text-sm mb-6">
+                <p className="text-navy-600 text-sm leading-relaxed mb-8">
                   Fill in your details and our team will review your requirement within one business day.
                 </p>
                 <Link
                   href={`/services/${service.slug}/enquiry`}
                   id="service-enquiry-cta-sidebar"
-                  className="block text-center py-3.5 bg-[#B8973E] text-white font-medium rounded-xl hover:bg-[#D4AF5C] transition-all duration-200 mb-4"
+                  className="block text-center py-3 bg-navy-900 text-white font-semibold text-sm rounded-lg hover:bg-navy-800 transition-all duration-300 mb-4 shadow-sm"
                 >
                   Submit Enquiry
                 </Link>
                 <Link
                   href="/contact"
-                  className="block text-center py-3 text-white/60 text-sm hover:text-white transition-colors"
+                  className="block text-center text-navy-500 text-xs font-medium hover:text-navy-900 transition-colors duration-300"
                 >
                   or contact us directly
                 </Link>
 
-                <div className="mt-6 pt-6 border-t border-white/10 space-y-3">
-                  <div className="flex items-center gap-2.5 text-white/40 text-xs">
-                    <Clock size={13} aria-hidden="true" />
+                <div className="mt-8 pt-8 border-t border-cream-100 space-y-4">
+                  <div className="flex items-center gap-3 text-navy-600 text-xs font-medium">
+                    <Clock size={16} className="text-navy-900" aria-hidden="true" />
                     We review every enquiry within 1 business day
                   </div>
-                  <div className="flex items-center gap-2.5 text-white/40 text-xs">
-                    <CheckCircle2 size={13} aria-hidden="true" />
+                  <div className="flex items-center gap-3 text-navy-600 text-xs font-medium">
+                    <CheckCircle2 size={16} className="text-navy-900" aria-hidden="true" />
                     No registration or payment required
                   </div>
                 </div>
@@ -187,21 +187,24 @@ export default async function ServiceDetailPage({ params }: Props) {
       </div>
 
       {/* Bottom CTA */}
-      <div className="bg-[#0D1526] py-16">
-        <div className="container-site text-center">
-          <h2 className="font-display text-3xl md:text-4xl text-white mb-4">
-            Ready to get started?
+      <div className="bg-cream-50 section-padding border-t border-cream-200 relative overflow-hidden">
+        {/* Decorative Element */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cream-200/50 rounded-full blur-[100px]" />
+        
+        <div className="container-site text-center relative z-10">
+          <h2 className="text-3xl md:text-5xl font-bold text-navy-900 mb-6 tracking-tight">
+            Ready to <span className="text-transparent bg-clip-text bg-gradient-to-r from-navy-900 to-navy-500">get started?</span>
           </h2>
-          <p className="text-white/50 mb-8 max-w-lg mx-auto">
+          <p className="text-navy-600 mb-10 max-w-lg mx-auto text-base leading-relaxed">
             Submit your enquiry in minutes. Our team will contact you to discuss your requirements.
           </p>
           <Link
             href={`/services/${service.slug}/enquiry`}
             id="service-enquiry-cta-bottom"
-            className="inline-flex items-center gap-2.5 px-8 py-4 bg-[#B8973E] text-white font-medium rounded-xl hover:bg-[#D4AF5C] transition-all duration-300"
+            className="group inline-flex items-center gap-3 px-8 py-4 bg-navy-900 text-white font-semibold text-sm rounded-lg hover:bg-navy-800 transition-all duration-300 shadow-sm hover:shadow-md"
           >
             Submit Your Enquiry
-            <ArrowRight size={16} />
+            <ArrowRight size={16} className="transform group-hover:translate-x-1 transition-transform duration-300" />
           </Link>
         </div>
       </div>
