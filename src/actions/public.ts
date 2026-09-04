@@ -23,7 +23,8 @@ export async function submitEnquiry(
       ip = headersList.get('x-forwarded-for') || headersList.get('x-real-ip') || 'unknown'
     }
 
-    // Rate limiting via Postgres (bypass in development for easier testing)
+    // Rate limiting disabled temporarily to allow unlimited testing
+    /*
     const supabase = await createClient()
     if (process.env.NODE_ENV !== 'development') {
       const { data: limitOk } = await supabase.rpc('check_rate_limit', { client_ip: ip })
@@ -34,6 +35,7 @@ export async function submitEnquiry(
         }
       }
     }
+    */
 
     // Validate input
     const parsed = enquirySchema.safeParse(formData)
