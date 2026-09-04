@@ -300,8 +300,8 @@ export function EnquiryForm({ service, category, categories, services }: Props) 
             <div className="text-xs text-[#A89E8E] mb-0.5">Service Selected</div>
             <div className="font-medium text-[#0D1526] text-sm">{service.name}</div>
           </div>
-          <input type="hidden" {...register('service_id')} />
-          <input type="hidden" {...register('service_category_id')} />
+          <input type="hidden" value={service.id} {...register('service_id')} />
+          <input type="hidden" value={service.category_id} {...register('service_category_id')} />
         </div>
       )}
 
