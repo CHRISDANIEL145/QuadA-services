@@ -42,3 +42,4 @@ next-env.d.ts
 
 # Large media files
 *.mp4
+!public/hero-section.mp4
