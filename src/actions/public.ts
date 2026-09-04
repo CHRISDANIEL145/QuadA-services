@@ -100,7 +100,7 @@ export async function submitEnquiry(
       console.error('Lead insert error:', error)
       return {
         success: false,
-        error: 'We could not process your request. Please try again.',
+        error: `Database insert failed: ${error?.message || 'Unknown error'} (Code: ${error?.code})`,
       }
     }
 
