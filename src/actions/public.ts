@@ -59,9 +59,22 @@ export async function submitEnquiry(
       }
     }
 
-    // Check if the user is authenticated (using regular client)
+    // Check if the user is authenticated and is a valid customer
     const { data: { user } } = await supabase.auth.getUser()
-    const customerId = user?.id || null
+    let customerId = null
+    
+    if (user?.id) {
+      // Verify user is actually in the customers table (prevent admin FK violation)
+      const { data: customer } = await supabase
+        .from('customers')
+        .select('id')
+        .eq('id', user.id)
+        .single()
+        
+      if (customer) {
+        customerId = customer.id
+      }
+    }
 
     // Use service role client to insert lead server-side
     // This allows us to select the returned lead_number bypassing the RLS select restriction
