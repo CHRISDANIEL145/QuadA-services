@@ -76,11 +76,7 @@ export default async function ServicesPage() {
                   {/* Category header */}
                   <div className={`flex items-end justify-between mb-10 pb-6 border-b ${isFinancial ? 'border-navy-800' : 'border-cream-200/60'}`}>
                     <div>
-                      {isFinancial && (
-                        <div className="relative w-12 h-12 mb-6">
-                          <Image src="/logo.png" alt="Quad A Logo" fill className="object-contain drop-shadow-sm" />
-                        </div>
-                      )}
+
                       <p className={`text-[10px] ${isFinancial ? 'text-cream-200' : 'text-navy-500'} tracking-widest uppercase font-semibold mb-3`}>
                         Category
                       </p>
