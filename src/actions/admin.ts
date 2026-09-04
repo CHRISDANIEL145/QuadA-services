@@ -644,8 +644,8 @@ export async function deleteLead(leadId: string): Promise<{ success: boolean; er
     if (admin.role !== "super_admin") {
       return { success: false, error: "Only super admins can delete leads." }
     }
-    const supabase = await createClient()
-    const { error } = await supabase.from("leads").delete().eq("id", leadId)
+    const adminClient = createServiceRoleClient()
+    const { error } = await adminClient.from("leads").delete().eq("id", leadId)
     if (error) return { success: false, error: error.message }
     return { success: true }
   } catch (err) {
@@ -667,8 +667,8 @@ export async function deleteServices(serviceIds: string[]): Promise<{ success: b
       return { success: false, error: "No services selected." }
     }
 
-    const supabase = await createClient()
-    const { error } = await supabase.from("services").delete().in("id", serviceIds)
+    const adminClient = createServiceRoleClient()
+    const { error } = await adminClient.from("services").delete().in("id", serviceIds)
     if (error) return { success: false, error: error.message }
     return { success: true }
   } catch (err) {
@@ -690,16 +690,16 @@ export async function deleteCategories(categoryIds: string[]): Promise<{ success
       return { success: false, error: "No categories selected." }
     }
 
-    const supabase = await createClient()
+    const adminClient = createServiceRoleClient()
 
     // 1. First, delete all services belonging to these categories to prevent foreign key errors
-    const { error: servicesError } = await supabase.from("services").delete().in("category_id", categoryIds)
+    const { error: servicesError } = await adminClient.from("services").delete().in("category_id", categoryIds)
     if (servicesError) {
       return { success: false, error: "Failed to delete associated services: " + servicesError.message }
     }
 
     // 2. Then delete the categories themselves
-    const { error } = await supabase.from("service_categories").delete().in("id", categoryIds)
+    const { error } = await adminClient.from("service_categories").delete().in("id", categoryIds)
     
     if (error) {
       return { success: false, error: error.message }
