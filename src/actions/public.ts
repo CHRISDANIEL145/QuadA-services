@@ -24,8 +24,8 @@ export async function submitEnquiry(
     }
 
     // Rate limiting disabled temporarily to allow unlimited testing
-    /*
     const supabase = await createClient()
+    /*
     if (process.env.NODE_ENV !== 'development') {
       const { data: limitOk } = await supabase.rpc('check_rate_limit', { client_ip: ip })
       if (!limitOk) {
