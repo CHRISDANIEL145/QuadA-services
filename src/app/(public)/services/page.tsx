@@ -1,4 +1,4 @@
-﻿import type { Metadata } from 'next'
+import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, ChevronRight } from 'lucide-react'
@@ -60,7 +60,7 @@ export default async function ServicesPage() {
           </div>
         ) : (
           servicesByCategory.map(({ category, services }, idx) => {
-            const isFinancial = category.name === "Financial Solutions & Advisory";
+            const isFinancial = category.name === "ABC ARONTONIO Financial Solutions & Advisory";
             const bgStyles = [
               'bg-cream-50',
               'bg-white',
