@@ -1,6 +1,6 @@
-export const metadata = {
+﻿export const metadata = {
   title: 'Terms of Service',
-  description: 'Terms of Service for QuadA Services.',
+  description: 'Terms of Service for ABC ARONTONIO.',
 }
 
 export default function TermsPage() {
@@ -25,7 +25,7 @@ export default function TermsPage() {
             <section className="space-y-4">
               <h2 className="text-2xl md:text-3xl font-bold text-navy-900">1. Agreement to Terms</h2>
               <p>
-                These Terms of Service constitute a legally binding agreement made between you, whether personally or on behalf of an entity ("you") and Quad A Life Assist Connect 360° ("we," "us" or "our"), concerning your access to and use of our website as well as any other media form, mobile application, or service related, linked, or otherwise connected thereto (collectively, the "Site"). You agree that by accessing the Site, you have read, understood, and agree to be bound by all of these Terms of Service.
+                These Terms of Service constitute a legally binding agreement made between you, whether personally or on behalf of an entity ("you") and ABC ARONTONIO People Service Assist Pvt Ltd ("we," "us" or "our"), concerning your access to and use of our website as well as any other media form, mobile application, or service related, linked, or otherwise connected thereto (collectively, the "Site"). You agree that by accessing the Site, you have read, understood, and agree to be bound by all of these Terms of Service.
               </p>
             </section>
 
@@ -77,7 +77,7 @@ export default function TermsPage() {
                 In order to resolve a complaint regarding the Site or to receive further information regarding use of the Site, please contact us at:
               </p>
               <div className="bg-cream-50 p-6 rounded-2xl border border-cream-200 mt-4">
-                <p className="font-semibold text-navy-900">Quad A Life Assist Connect 360°</p>
+                <p className="font-semibold text-navy-900">ABC ARONTONIO People Service Assist Pvt Ltd</p>
                 <p>Tirunelveli, Tamil Nadu, India</p>
                 <p>Email: bruce_mba07@yahoo.co.in</p>
                 <p>Phone: +91 96559 55777</p>

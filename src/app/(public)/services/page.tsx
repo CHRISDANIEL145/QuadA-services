@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, ChevronRight } from 'lucide-react'
@@ -8,7 +8,7 @@ import type { ServiceCategory, Service } from '@/types'
 export const metadata: Metadata = {
   title: 'Services',
   description:
-    'Explore QuadA Services — home maintenance, cleaning, senior care, interior design, real estate, corporate services and more across Tamil Nadu.',
+    'Explore ABC ARONTONIO — home maintenance, cleaning, senior care, interior design, real estate, corporate services and more across Tamil Nadu.',
 }
 
 export const revalidate = 3600 // Revalidate every hour

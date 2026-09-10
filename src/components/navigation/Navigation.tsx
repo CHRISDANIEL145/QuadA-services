@@ -75,26 +75,14 @@ export function Navigation({ user }: { user: User | null }) {
           <Link
             href="/"
             className="flex items-center gap-3 group"
-            aria-label="QuadA Services — Home"
+            aria-label="ABC ARONTONIO — Home"
           >
             <div className={cn(
-              "relative w-10 h-10 overflow-hidden rounded-full bg-white flex-shrink-0 transition-all duration-300 border-2",
-              scrolled || !isHeroPage ? "border-cream-200" : "border-white/30"
+              "relative h-10 w-36 flex-shrink-0 transition-all duration-300"
             )}>
-              <Image src="/new-logo.png" alt="Quad A Logo" fill className="object-cover" />
+              <Image src="/abc-logo.png" alt="ABC ARONTONIO Logo" fill className="object-contain" sizes="144px" />
             </div>
-            <span className={cn(
-              "font-semibold text-lg tracking-tight",
-              scrolled || !isHeroPage ? "text-navy-900" : "text-white"
-            )}>
-              Quad A
-              <span className={cn(
-                "block text-[10px] font-medium mt-0.5 opacity-70",
-                scrolled || !isHeroPage ? "text-navy-500" : "text-white/70"
-              )}>
-                Life Assist
-              </span>
-            </span>
+
           </Link>
 
           {/* Desktop Nav */}

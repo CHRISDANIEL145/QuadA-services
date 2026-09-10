@@ -1,8 +1,8 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: {
-    default: 'Admin — QuadA Services',
+    default: 'Admin — ABC ARONTONIO',
     template: '%s | Admin',
   },
   robots: { index: false, follow: false },

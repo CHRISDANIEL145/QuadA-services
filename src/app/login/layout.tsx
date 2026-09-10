@@ -1,8 +1,8 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Sign In / Register | Quad A',
-  description: 'Access your Quad A account or register to start your journey with us today.',
+  title: 'Sign In / Register | ABC ARONTONIO',
+  description: 'Access your ABC ARONTONIO account or register to start your journey with us today.',
 }
 
 export default function LoginLayout({

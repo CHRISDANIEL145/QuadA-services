@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { motion } from 'framer-motion'
 
@@ -25,7 +25,7 @@ const reasons = [
   }
 ]
 
-export function WhyQuadA() {
+export function WhyABC ARONTONIO() {
   return (
     <section className="section-padding bg-cream-100 relative border-t border-cream-200">
       <div className="container-site">
@@ -36,7 +36,7 @@ export function WhyQuadA() {
           <div className="relative">
             <div className="lg:sticky top-32">
               <span className="text-navy-500 tracking-wider uppercase text-xs font-semibold mb-6 block">
-                The Quad A Standard
+                The ABC ARONTONIO Standard
               </span>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-navy-900 mb-8 leading-tight tracking-tight">
                 Uncompromising <br className="hidden md:block" />

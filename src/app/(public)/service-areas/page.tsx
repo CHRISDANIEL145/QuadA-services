@@ -1,11 +1,11 @@
-import { Metadata } from 'next'
+﻿import { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowRight, ShieldCheck, Clock, Users, Map } from 'lucide-react'
 import { ServiceAreaMap } from '@/components/home/ServiceAreaMap'
 
 export const metadata: Metadata = {
   title: 'Service Areas',
-  description: 'Areas covered by QuadA Services. We coordinate premium services across 6 elite districts in South India.',
+  description: 'Areas covered by ABC ARONTONIO. We coordinate premium services across 6 elite districts in South India.',
 }
 
 const advantages = [
@@ -60,7 +60,7 @@ export default function ServiceAreasPage() {
         <div className="container-site">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-navy-900 mb-6 tracking-tight">
-              The QuadA <span className="text-transparent bg-clip-text bg-gradient-to-r from-navy-900 to-navy-500">Advantage</span>
+              The ABC ARONTONIO <span className="text-transparent bg-clip-text bg-gradient-to-r from-navy-900 to-navy-500">Advantage</span>
             </h2>
             <p className="text-navy-600 text-lg leading-relaxed">
               Why our focused regional presence guarantees a better service experience for you.

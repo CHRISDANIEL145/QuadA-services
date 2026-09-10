@@ -1,6 +1,6 @@
-export const metadata = {
+﻿export const metadata = {
   title: 'Privacy Policy',
-  description: 'Privacy Policy for QuadA Services.',
+  description: 'Privacy Policy for ABC ARONTONIO.',
 }
 
 export default function PrivacyPage() {
@@ -25,7 +25,7 @@ export default function PrivacyPage() {
             <section className="space-y-4">
               <h2 className="text-2xl md:text-3xl font-bold text-navy-900">1. Introduction</h2>
               <p>
-                At Quad A Life Assist Connect 360°, we take your privacy seriously. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website and use our service marketplace platform. Please read this privacy policy carefully. If you do not agree with the terms of this privacy policy, please do not access the site.
+                At ABC ARONTONIO People Service Assist Pvt Ltd, we take your privacy seriously. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website and use our service marketplace platform. Please read this privacy policy carefully. If you do not agree with the terms of this privacy policy, please do not access the site.
               </p>
             </section>
 
@@ -81,7 +81,7 @@ export default function PrivacyPage() {
                 If you have questions or comments about this Privacy Policy, please contact us at:
               </p>
               <div className="bg-cream-50 p-6 rounded-2xl border border-cream-200 mt-4">
-                <p className="font-semibold text-navy-900">Quad A Life Assist Connect 360°</p>
+                <p className="font-semibold text-navy-900">ABC ARONTONIO People Service Assist Pvt Ltd</p>
                 <p>Tirunelveli, Tamil Nadu, India</p>
                 <p>Email: bruce_mba07@yahoo.co.in</p>
                 <p>Phone: +91 96559 55777</p>

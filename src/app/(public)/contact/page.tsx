@@ -1,15 +1,15 @@
-import { ArrowRight, Phone, Mail, MapPin } from 'lucide-react'
+﻿import { ArrowRight, Phone, Mail, MapPin } from 'lucide-react'
 import { ContactForm } from '@/components/forms/ContactForm'
 import Link from 'next/link'
 
 export const metadata = {
   title: 'Contact',
-  description: 'Get in touch with QuadA Services. We\'re here to help coordinate the right service for your needs.',
+  description: 'Get in touch with ABC ARONTONIO. We\'re here to help coordinate the right service for your needs.',
 }
 
 const contactInfo = [
   { icon: Phone, label: 'Phone', value: '+91 99999 99999', href: 'tel:+919999999999' },
-  { icon: Mail, label: 'Email', value: 'hello@quadaservices.com', href: 'mailto:hello@quadaservices.com' },
+  { icon: Mail, label: 'Email', value: 'hello@ABC ARONTONIOservices.com', href: 'mailto:hello@ABC ARONTONIOservices.com' },
   { icon: MapPin, label: 'Coverage', value: 'Tamil Nadu, India', href: null },
 ]
 

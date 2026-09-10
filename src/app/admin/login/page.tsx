@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
@@ -57,7 +57,7 @@ export default function AdminLoginPage() {
       <div className="relative w-full max-w-lg">
         {/* Logo */}
         <div className="text-center mb-10">
-          <h1 className="font-display text-3xl text-navy-900 mb-1 font-bold">QuadA Services</h1>
+          <h1 className="font-display text-3xl text-navy-900 mb-1 font-bold">ABC ARONTONIO</h1>
           <p className="text-navy-500 text-base">Admin Portal</p>
         </div>
 
@@ -80,7 +80,7 @@ export default function AdminLoginPage() {
                 id="admin_email"
                 type="email"
                 autoComplete="email"
-                placeholder="admin@quadaservices.com"
+                placeholder="admin@ABC ARONTONIOservices.com"
                 className={cn(
                   'w-full h-16 px-6 text-lg rounded-xl bg-cream-50 border-2 text-navy-900 placeholder:text-navy-500/50 outline-none transition-all duration-200 focus:ring-4 focus:ring-navy-600/20 focus:border-navy-500',
                   errors.email

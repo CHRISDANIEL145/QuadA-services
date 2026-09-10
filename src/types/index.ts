@@ -1,5 +1,5 @@
-// ============================================================
-// QuadA Services — Core Domain Types
+﻿// ============================================================
+// ABC ARONTONIO — Core Domain Types
 // ============================================================
 
 export type AdminRole = 'super_admin' | 'admin' | 'manager' | 'staff'

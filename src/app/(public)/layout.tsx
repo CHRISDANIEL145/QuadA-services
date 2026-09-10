@@ -1,12 +1,12 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import { Navigation } from '@/components/navigation/Navigation'
 import { Footer } from '@/components/navigation/Footer'
 import { createClient } from '@/lib/supabase/server'
 
 export const metadata: Metadata = {
   title: {
-    default: 'QuadA Services — Professional Multi-Service Platform',
-    template: '%s | QuadA Services',
+    default: 'ABC ARONTONIO — Professional Multi-Service Platform',
+    template: '%s | ABC ARONTONIO',
   },
 }
 

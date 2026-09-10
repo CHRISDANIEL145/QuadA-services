@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `Enquiry — ${service.name}`,
     description: desc,
     openGraph: {
-      title: `Enquiry — ${service.name} | Quad A Life Assist Connect 360°`,
+      title: `Enquiry — ${service.name} | ABC ARONTONIO People Service Assist Pvt Ltd`,
       description: desc,
       type: 'website',
     },

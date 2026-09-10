@@ -24,12 +24,8 @@ export async function Footer() {
           {/* Brand */}
           <div className="lg:col-span-1">
             <div className="flex items-center gap-3 mb-6">
-              <div className="relative w-12 h-12 overflow-hidden rounded-full bg-white flex-shrink-0">
-                <Image src="/new-logo.png" alt="Quad A Logo" fill className="object-cover" />
-              </div>
-              <div>
-                <div className="text-white font-semibold text-lg tracking-tight leading-none">Quad A</div>
-                <div className="text-[10px] text-white/60 font-medium mt-0.5">Life Assist Connect 360°</div>
+              <div className="relative h-10 w-44 flex-shrink-0">
+                <Image src="/abc-logo.png" alt="ABC ARONTONIO Logo" fill className="object-contain" sizes="176px" />
               </div>
             </div>
             <p className="text-sm leading-relaxed text-white/70 mb-6">
@@ -96,7 +92,7 @@ export async function Footer() {
         {/* Bottom bar */}
         <div className="border-t border-white/10 py-6 mt-16 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-white/50">
-            © {new Date().getFullYear()} Quad A Services. All rights reserved.
+            © {new Date().getFullYear()} ABC ARONTONIO People Service Assist Pvt Ltd. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
             <Link href="/privacy" className="text-sm text-white/50 hover:text-white transition-colors">

@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { motion, Variants } from 'framer-motion'
 import Link from 'next/link'
@@ -33,7 +33,7 @@ export function AboutContent() {
             className="max-w-4xl"
           >
             <motion.div variants={FADE_UP} className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-cream-200 text-navy-700 text-xs uppercase tracking-widest font-semibold mb-8 shadow-sm">
-              <Sparkles size={14} className="text-navy-500" /> The Quad A Standard
+              <Sparkles size={14} className="text-navy-500" /> The ABC ARONTONIO Standard
             </motion.div>
             <motion.h1 variants={FADE_UP} className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-navy-900 tracking-tight leading-[1.1] mb-8">
               Redefining <br className="hidden md:block" />
@@ -61,7 +61,7 @@ export function AboutContent() {
               </motion.h2>
               <motion.div variants={FADE_UP} className="space-y-6 text-navy-600 text-base md:text-lg leading-relaxed">
                 <p>
-                  Quad A Services was founded on a simple premise: managing life's various services shouldn't require managing a dozen different vendors, contractors, and agencies. 
+                  ABC ARONTONIO People Service Assist Pvt Ltd was founded on a simple premise: managing life's various services shouldn't require managing a dozen different vendors, contractors, and agencies. 
                 </p>
                 <p>
                   We act as your dedicated service concierge. Whether you need reliable home maintenance, specialized senior care, or complex real estate solutions, we coordinate everything seamlessly through our vetted network of professionals.
@@ -103,7 +103,7 @@ export function AboutContent() {
             transition={{ duration: 0.8 }}
             className="text-center max-w-3xl mx-auto mb-16 md:mb-24"
           >
-            <h2 className="text-3xl md:text-5xl font-bold mb-6 tracking-tight">The Quad A Philosophy</h2>
+            <h2 className="text-3xl md:text-5xl font-bold mb-6 tracking-tight">The ABC ARONTONIO Philosophy</h2>
             <p className="text-cream-200/80 text-lg leading-relaxed">
               We don't just provide services; we deliver an experience grounded in trust, precision, and unwavering quality.
             </p>

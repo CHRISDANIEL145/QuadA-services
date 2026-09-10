@@ -1,4 +1,4 @@
-import type { Metadata, Viewport } from 'next'
+﻿import type { Metadata, Viewport } from 'next'
 import { Montserrat, Playfair_Display } from 'next/font/google'
 import { Toaster } from 'react-hot-toast'
 import './globals.css'
@@ -19,30 +19,30 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Quad A Life Assist Connect 360° — One Point. Every Service.',
-    template: '%s | Quad A Life Assist Connect 360°',
+    default: 'ABC ARONTONIO People Service Assist Pvt Ltd — One Point. Every Service.',
+    template: '%s | ABC ARONTONIO People Service Assist Pvt Ltd',
   },
   description:
     'One customer contact. Every service need. Coordinated, followed up, and completed through a verified local partner network across Tirunelveli, Thoothukudi, Kanyakumari, Virudhunagar, and Tenkasi.',
   keywords: [
     'home maintenance', 'senior care', 'event management', 'real estate solutions',
-    'financial advisory', 'personal supply', 'Quad A Life Assist', 'Tirunelveli services',
+    'financial advisory', 'personal supply', 'ABC ARONTONIO People Service Assist', 'Tirunelveli services',
     'Thoothukudi services', 'Kanyakumari services', 'Virudhunagar services', 'Tenkasi services',
   ],
   authors: [{ name: 'Bhrucelin Sahayaraj' }],
-  creator: 'Quad A Life Assist Connect 360°',
+  creator: 'ABC ARONTONIO People Service Assist Pvt Ltd',
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'),
   openGraph: {
     type: 'website',
-    siteName: 'Quad A Life Assist Connect 360°',
-    title: 'Quad A Life Assist Connect 360°',
+    siteName: 'ABC ARONTONIO People Service Assist Pvt Ltd',
+    title: 'ABC ARONTONIO People Service Assist Pvt Ltd',
     description:
       'One customer contact. Every service need. Coordinated, followed up, and completed across 5 South Indian districts.',
     locale: 'en_IN',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Quad A Life Assist Connect 360°',
+    title: 'ABC ARONTONIO People Service Assist Pvt Ltd',
     description: 'One Point. Every Service. Local. Reliable. Coordinated.',
   },
   robots: {

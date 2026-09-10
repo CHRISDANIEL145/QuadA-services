@@ -44,7 +44,7 @@ function LoginForm({ isSignUp }: { isSignUp: boolean }) {
       !isSignUp ? "md:translate-x-0" : "md:translate-x-[-20%]"
     )}>
       <h2 className="text-4xl md:text-5xl font-bold text-navy-900 mb-2">Sign In</h2>
-      <p className="text-base text-navy-600 mb-12 text-center">Access your Quad A account</p>
+      <p className="text-base text-navy-600 mb-12 text-center">Access your ABC ARONTONIO account</p>
 
       <form className="w-full flex flex-col gap-6" onSubmit={loginForm.handleSubmit(handleLogin)}>
         <div className="relative shrink-0 w-full min-h-[4rem]">
@@ -127,7 +127,7 @@ function SignUpForm({ isSignUp }: { isSignUp: boolean }) {
       isSignUp ? "md:translate-x-0 md:opacity-100" : "md:translate-x-[20%] md:opacity-0 pointer-events-none"
     )}>
       <h2 className="text-4xl md:text-5xl font-bold text-navy-900 mb-2">Create Account</h2>
-      <p className="text-base text-navy-600 mb-12 text-center">Join Quad A today</p>
+      <p className="text-base text-navy-600 mb-12 text-center">Join ABC ARONTONIO today</p>
 
       <form className="w-full flex flex-col gap-6" onSubmit={signUpForm.handleSubmit(handleSignUp)}>
         <div className="relative shrink-0 w-full min-h-[4rem]">
@@ -255,10 +255,10 @@ function LoginContent() {
             
             {/* Left/Top side of overlay (shown when panel is on left/top - Sign Up mode) */}
             <div className="w-full h-1/2 md:w-1/2 md:h-full flex flex-col items-center justify-center p-10 md:p-20 text-white text-center">
-              <div className="relative w-20 h-20 md:w-24 md:h-24 mb-6 rounded-full overflow-hidden bg-white shadow-xl">
-                <Image src="/new-logo.png" alt="Quad A Logo" fill className="object-cover" />
+              <div className="relative w-48 h-16 mb-6">
+                <Image src="/abc-logo.png" alt="ABC ARONTONIO Logo" fill className="object-contain" sizes="192px" />
               </div>
-              <h2 className="text-5xl md:text-6xl font-bold mb-6">Welcome To<br/>QUAD A</h2>
+              <h2 className="text-5xl md:text-6xl font-bold mb-6">Welcome To<br/>ABC ARONTONIO</h2>
               <p className="text-base md:text-lg text-white/90 mb-10 max-w-sm leading-relaxed">
                 Already have an account? Sign in to access your dashboard and services.
               </p>
@@ -272,8 +272,8 @@ function LoginContent() {
             
             {/* Right/Bottom side of overlay (shown when panel is on right/bottom - Sign In mode) */}
             <div className="w-full h-1/2 md:w-1/2 md:h-full flex flex-col items-center justify-center p-10 md:p-20 text-white text-center">
-              <div className="relative w-20 h-20 md:w-24 md:h-24 mb-6 rounded-full overflow-hidden bg-white shadow-xl">
-                <Image src="/new-logo.png" alt="Quad A Logo" fill className="object-cover" />
+              <div className="relative w-48 h-16 mb-6">
+                <Image src="/abc-logo.png" alt="ABC ARONTONIO Logo" fill className="object-contain" sizes="192px" />
               </div>
               <h2 className="text-5xl md:text-6xl font-bold mb-6">Hello World!</h2>
               <p className="text-base md:text-lg text-white/90 mb-10 max-w-sm leading-relaxed">

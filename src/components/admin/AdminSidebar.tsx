@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
@@ -49,7 +49,7 @@ export function AdminSidebar({ admin }: Props) {
           Q
         </div>
         <div>
-          <div className="text-white text-sm font-semibold leading-none">QuadA Admin</div>
+          <div className="text-white text-sm font-semibold leading-none">ABC ARONTONIO Admin</div>
           <div className="text-white/30 text-[10px] mt-0.5">Management Portal</div>
         </div>
       </div>
