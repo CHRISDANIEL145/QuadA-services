@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { Phone, Mail, MapPin, ArrowRight } from 'lucide-react'
+import { Phone, Mail, MapPin, ArrowRight, Instagram, Facebook } from 'lucide-react'
 
 import type { ServiceCategory } from '@/types'
 
@@ -49,6 +49,31 @@ export async function Footer() {
               <div className="flex items-start gap-3 text-sm text-white/70">
                 <MapPin size={16} className="text-cream-300 mt-0.5 shrink-0" />
                 <span>Tirunelveli, Tamil Nadu</span>
+              </div>
+              
+              <div className="pt-2 flex flex-col gap-3">
+                <div className="flex items-center gap-3">
+                  <span className="text-xs text-white/50 uppercase tracking-wider w-16">Company</span>
+                  <div className="flex items-center gap-3">
+                    <a href="https://www.instagram.com/bruce_mba07yahoo.co.in?stkn=MTdueWdpb2FmdnQ3aA==" target="_blank" rel="noopener noreferrer" className="text-white/70 hover:text-[#E1306C] transition-colors" aria-label="Company Instagram">
+                      <Instagram size={18} />
+                    </a>
+                    <a href="https://www.facebook.com/share/19BYNiodwZ/" target="_blank" rel="noopener noreferrer" className="text-white/70 hover:text-[#1877F2] transition-colors" aria-label="Company Facebook">
+                      <Facebook size={18} />
+                    </a>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="text-xs text-white/50 uppercase tracking-wider w-16">Founder</span>
+                  <div className="flex items-center gap-3">
+                    <a href="https://www.instagram.com/antonybrucelin?utm_source=qr&stkn=MWt1ZnJqejJsYXc0ZA==" target="_blank" rel="noopener noreferrer" className="text-white/70 hover:text-[#E1306C] transition-colors" aria-label="MD Instagram">
+                      <Instagram size={18} />
+                    </a>
+                    <a href="https://www.facebook.com/share/1EyFwSVFdd/" target="_blank" rel="noopener noreferrer" className="text-white/70 hover:text-[#1877F2] transition-colors" aria-label="MD Facebook">
+                      <Facebook size={18} />
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
