@@ -62,8 +62,8 @@ export function MdMessage() {
             </span>
 
             <div className="relative mb-8">
-              <Quote size={52} className="text-cream-200 absolute -top-3 -left-3 -z-0" />
-              <blockquote className="text-2xl md:text-3xl font-display italic text-navy-800 leading-snug relative z-10 pl-4 border-l-4 border-navy-900">
+              <Quote size={64} className="text-cream-200 absolute -top-6 -left-8 -z-10" />
+              <blockquote className="text-2xl md:text-3xl font-display italic text-navy-800 leading-snug relative z-10 pl-6 border-l-4 border-navy-900">
                 "Time is our most precious non-renewable resource. At ABC ARONTONIO, our purpose is to give you back your time while delivering uncompromised quality and unmatched value."
               </blockquote>
             </div>

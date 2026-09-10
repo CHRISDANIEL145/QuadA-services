@@ -143,8 +143,8 @@ export function AboutContent() {
               </motion.div>
 
               <motion.div variants={FADE_UP} className="relative">
-                <Quote size={48} className="text-cream-200 absolute -top-4 -left-4" />
-                <blockquote className="text-2xl md:text-3xl font-display italic text-navy-800 leading-snug pl-6 border-l-4 border-navy-900 mb-8">
+                <Quote size={64} className="text-cream-200 absolute -top-6 -left-8 -z-10" />
+                <blockquote className="relative z-10 text-2xl md:text-3xl font-display italic text-navy-800 leading-snug pl-6 border-l-4 border-navy-900 mb-8">
                   "Time is our most precious non-renewable resource. At ABC ARONTONIO, our purpose is to give you back your time while delivering uncompromised quality and unmatched value."
                 </blockquote>
               </motion.div>
