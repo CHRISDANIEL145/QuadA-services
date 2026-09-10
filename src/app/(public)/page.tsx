@@ -1,7 +1,7 @@
-﻿import { getPublicCategories as getCategories } from '@/actions/public'
+import { getPublicCategories as getCategories } from '@/actions/public'
 import { HouseScene } from '@/components/home/HouseScene'
 import { CategoryDiscovery } from '@/components/home/CategoryDiscovery'
-import { WhyABC ARONTONIO } from '@/components/home/WhyABC ARONTONIO'
+import { WhyQuadA } from '@/components/home/WhyQuadA'
 import { HowItWorks } from '@/components/home/HowItWorks'
 import { ServiceAreaMap } from '@/components/home/ServiceAreaMap'
 import { HeroCTA } from '@/components/home/HeroCTA'
@@ -17,7 +17,7 @@ export default async function HomePage() {
         Emergency override to fix Hydration mismatch on the server. */}
       <HouseScene categories={categories} />
       <CategoryDiscovery categories={categories} />
-      <WhyABC ARONTONIO />
+      <WhyQuadA />
       <HowItWorks />
       <ServiceAreaMap />
       <HeroCTA />

@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import { motion } from 'framer-motion'
 
@@ -25,7 +25,7 @@ const reasons = [
   }
 ]
 
-export function WhyABC ARONTONIO() {
+export function WhyQuadA() {
   return (
     <section className="section-padding bg-cream-100 relative border-t border-cream-200">
       <div className="container-site">
