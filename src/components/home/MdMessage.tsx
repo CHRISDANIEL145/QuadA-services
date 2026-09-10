@@ -30,6 +30,7 @@ export function MdMessage() {
                   src="/md-antony.png"
                   alt="Antony Brucelin — Managing Director, ABC ARONTONIO"
                   fill
+                  unoptimized
                   className="object-cover object-top"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-navy-950/75 via-transparent to-transparent" />

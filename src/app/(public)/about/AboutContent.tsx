@@ -116,6 +116,7 @@ export function AboutContent() {
                     src="/md-antony.png"
                     alt="Antony Brucelin — Managing Director, ABC ARONTONIO"
                     fill
+                    unoptimized
                     className="object-cover object-top"
                     priority
                   />
