@@ -2,6 +2,7 @@ import { getPublicCategories as getCategories } from '@/actions/public'
 import { HouseScene } from '@/components/home/HouseScene'
 import { CategoryDiscovery } from '@/components/home/CategoryDiscovery'
 import { WhyQuadA } from '@/components/home/WhyQuadA'
+import { MdMessage } from '@/components/home/MdMessage'
 import { HowItWorks } from '@/components/home/HowItWorks'
 import { ServiceAreaMap } from '@/components/home/ServiceAreaMap'
 import { HeroCTA } from '@/components/home/HeroCTA'
@@ -18,6 +19,7 @@ export default async function HomePage() {
       <HouseScene categories={categories} />
       <CategoryDiscovery categories={categories} />
       <WhyQuadA />
+      <MdMessage />
       <HowItWorks />
       <ServiceAreaMap />
       <HeroCTA />
