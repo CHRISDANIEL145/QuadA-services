@@ -170,6 +170,80 @@ export function AboutContent() {
         </div>
       </section>
 
+      {/* ─── Managing Partner ─────────────────────────────────── */}
+      <section className="bg-cream-50 section-padding border-t border-cream-200">
+        <div className="container-site">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+
+            {/* Partner Message — left on mobile, left on desktop */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: '-100px' }}
+              variants={STAGGER}
+              className="order-2 lg:order-1"
+            >
+              <motion.div variants={FADE_UP} className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-navy-50 border border-navy-100 text-navy-700 text-xs uppercase tracking-widest font-semibold mb-6">
+                <Users size={12} className="text-navy-500" />
+                Managing Partner
+              </motion.div>
+
+              <motion.h2 variants={FADE_UP} className="text-3xl md:text-4xl font-bold text-navy-900 tracking-tight mb-6">
+                Building Partnerships. <br className="hidden md:block" />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-navy-900 to-navy-500">
+                  Delivering Value.
+                </span>
+              </motion.h2>
+
+              <motion.div variants={FADE_UP} className="space-y-4 text-navy-600 text-base leading-relaxed">
+                <p>
+                  At ABC ARONTONIO, the Managing Partner supports the organisation&apos;s strategic direction and day-to-day growth initiatives, helping connect people, services, and opportunities through a clear focus on quality, trust, and long-term value.
+                </p>
+                <p>
+                  The role contributes to building strong relationships with clients and partners, while supporting the organisation&apos;s commitment to dependable and professional service delivery across Tamil Nadu.
+                </p>
+              </motion.div>
+
+              <motion.div variants={FADE_UP} className="mt-8 pt-6 border-t border-cream-200">
+                <div className="font-bold text-navy-900 text-lg">Managing Partner</div>
+                <div className="text-navy-500 text-sm">ABC ARONTONIO People Service Assist</div>
+              </motion.div>
+            </motion.div>
+
+            {/* Partner Photo — right on desktop */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.96 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, ease: 'easeOut' }}
+              className="relative order-1 lg:order-2"
+            >
+              <div className="relative w-full max-w-md mx-auto lg:ml-auto lg:mr-0">
+                {/* Decorative frame — rotated opposite to MD for variety */}
+                <div className="absolute -inset-4 rounded-3xl border-2 border-cream-200 rotate-2" />
+                <div className="absolute -inset-4 rounded-3xl bg-white rotate-2 -z-10" />
+                <div className="relative rounded-2xl overflow-hidden shadow-2xl bg-cream-100 aspect-[3/4]">
+                  <Image
+                    src="/Managing partner.jpeg"
+                    alt="Managing Partner — ABC ARONTONIO People Service Assist"
+                    fill
+                    unoptimized
+                    className="object-cover object-top"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-navy-950/70 via-transparent to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-6">
+                    <div className="text-white font-bold text-xl">Managing Partner</div>
+                    <div className="text-cream-300 text-sm mt-1">ABC ARONTONIO People Service Assist</div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+          </div>
+        </div>
+      </section>
+
       {/* ─── Core Philosophy / Pricing Model ─────────────────── */}
       <section className="bg-navy-950 section-padding text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-navy-800/60 via-navy-950 to-navy-950" />
