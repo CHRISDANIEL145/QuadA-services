@@ -40,6 +40,15 @@ export function HeroCTA() {
               Explore Portfolios
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
+
+            <Link
+              href="/contact"
+              className="group flex items-center justify-center w-full sm:w-auto gap-3 px-8 py-4 bg-cream-100 border border-cream-200 text-navy-900 font-semibold text-sm rounded-xl hover:bg-cream-200 transition-all duration-300 shadow-md shadow-navy-900/5"
+              id="general-enquiry-cta"
+            >
+              <Sparkles className="w-4 h-4 text-navy-500" />
+              General Enquiry
+            </Link>
             
             <Link 
               href="/contact" 

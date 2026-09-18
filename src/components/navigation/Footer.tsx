@@ -1,8 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { Phone, Mail, MapPin, ArrowRight, Instagram, Facebook } from 'lucide-react'
-
-import type { ServiceCategory } from '@/types'
+import { Phone, Mail, MapPin, ArrowRight, Youtube, Instagram, Facebook, Linkedin, Send } from 'lucide-react'
 
 const companyLinks = [
   { href: '/about', label: 'About Us' },
@@ -10,6 +8,39 @@ const companyLinks = [
   { href: '/contact', label: 'Contact' },
   { href: '/privacy', label: 'Privacy Policy' },
   { href: '/terms', label: 'Terms of Service' },
+]
+
+const SOCIAL = [
+  {
+    icon: Youtube,
+    label: 'YouTube',
+    href: 'https://youtube.com/@abrucelinsahayaraj3898?si=BJNUJGDInLC2Smf_',
+    hoverColor: 'hover:text-[#FF0000]',
+  },
+  {
+    icon: Instagram,
+    label: 'Instagram',
+    href: 'https://www.instagram.com/antonybrucelin?utm_source=qr&stkn=MWt1ZnJqejJsYXc0ZA==',
+    hoverColor: 'hover:text-[#E1306C]',
+  },
+  {
+    icon: Facebook,
+    label: 'Facebook',
+    href: 'https://www.facebook.com/share/19UKGn3QzU/',
+    hoverColor: 'hover:text-[#1877F2]',
+  },
+  {
+    icon: Linkedin,
+    label: 'LinkedIn',
+    href: 'https://www.linkedin.com/in/abc-arontonio-people-service-assist-company-04aba973?utm_source=share_via&utm_content=profile&utm_medium=member_android',
+    hoverColor: 'hover:text-[#0A66C2]',
+  },
+  {
+    icon: Send,
+    label: 'Telegram — @ABCARONTONIO',
+    href: 'https://t.me/ABCARONTONIO',
+    hoverColor: 'hover:text-[#2AABEE]',
+  },
 ]
 
 export async function Footer() {
@@ -29,7 +60,7 @@ export async function Footer() {
               </div>
             </div>
             <p className="text-sm leading-relaxed text-white/70 mb-6">
-              One point. Every service. Trusted coordination across Tirunelveli, Thoothukudi, Kanyakumari, Virudhunagar & Tenkasi.
+              One point. Every service. Trusted coordination across Tirunelveli, Thoothukudi, Kanyakumari, Virudhunagar &amp; Tenkasi.
             </p>
             <div className="flex flex-col gap-3">
               <a
@@ -46,38 +77,53 @@ export async function Footer() {
                 <Mail size={16} className="text-cream-300" />
                 bruce_mba07@yahoo.co.in
               </a>
+
+              {/* Main Office */}
               <div className="flex items-start gap-3 text-sm text-white/70">
                 <MapPin size={16} className="text-cream-300 mt-0.5 shrink-0" />
-                <span>Tirunelveli, Tamil Nadu</span>
+                <div>
+                  <p className="text-white/40 text-[10px] uppercase tracking-wider font-semibold mb-1">Main Office</p>
+                  <address className="not-italic leading-relaxed">
+                    No. 18, Jamal Nagar,<br />
+                    Bharathi Nagar (Extn.),<br />
+                    STC College Road, Palayamkottai,<br />
+                    Tirunelveli – 627007, Tamil Nadu
+                  </address>
+                </div>
               </div>
 
-              <div className="pt-2 flex flex-col gap-3">
-                <div className="flex items-center gap-3">
-                  <span className="text-xs text-white/50 uppercase tracking-wider w-16">Company</span>
-                  <div className="flex items-center gap-3">
-                    <a href="https://www.instagram.com/bruce_mba07yahoo.co.in?stkn=MTdueWdpb2FmdnQ3aA==" target="_blank" rel="noopener noreferrer" className="text-white/70 hover:text-[#E1306C] transition-colors" aria-label="Company Instagram">
-                      <Instagram size={18} />
-                    </a>
-                    <a href="https://www.facebook.com/share/1EyFwSVFdd/" target="_blank" rel="noopener noreferrer" className="text-white/70 hover:text-[#1877F2] transition-colors" aria-label="Company Facebook">
-                      <Facebook size={18} />
-                    </a>
-                  </div>
+              {/* Chennai Branch */}
+              <div className="flex items-start gap-3 text-sm text-white/70">
+                <MapPin size={16} className="text-cream-300 mt-0.5 shrink-0" />
+                <div>
+                  <p className="text-white/40 text-[10px] uppercase tracking-wider font-semibold mb-1">Chennai Office (Branch)</p>
+                  <address className="not-italic leading-relaxed">
+                    No. 7/65, Sannacherry,<br />
+                    Pondaveerammal Koil Street,<br />
+                    Kovalam, Kanchipuram District,<br />
+                    Chennai – 603119, Tamil Nadu
+                  </address>
                 </div>
-                <div className="flex items-center gap-3">
-                  <span className="text-xs text-white/50 uppercase tracking-wider w-16">Founder</span>
-                  <div className="flex items-center gap-3">
-                    <a href="https://www.instagram.com/antonybrucelin?utm_source=qr&stkn=MWt1ZnJqejJsYXc0ZA==" target="_blank" rel="noopener noreferrer" className="text-white/70 hover:text-[#E1306C] transition-colors" aria-label="MD Instagram">
-                      <Instagram size={18} />
-                    </a>
-                    <a href="https://www.facebook.com/share/19BYNiodwZ/" target="_blank" rel="noopener noreferrer" className="text-white/70 hover:text-[#1877F2] transition-colors" aria-label="MD Facebook">
-                      <Facebook size={18} />
-                    </a>
-                  </div>
-                </div>
+              </div>
+
+              {/* Social Icons */}
+              <div className="pt-3 flex items-center gap-4" aria-label="Social media links">
+                {SOCIAL.map(({ icon: Icon, label, href, hoverColor }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    title={label}
+                    className={`text-white/50 transition-colors duration-200 ${hoverColor} focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 rounded`}
+                  >
+                    <Icon size={18} />
+                  </a>
+                ))}
               </div>
             </div>
           </div>
-
 
           {/* Company */}
           <div>
@@ -111,6 +157,22 @@ export async function Footer() {
               Send Enquiry
               <ArrowRight size={16} />
             </Link>
+
+            {/* Telegram callout */}
+            <div className="mt-8 pt-6 border-t border-white/10">
+              <p className="text-white/40 text-[10px] uppercase tracking-wider font-semibold mb-3">Telegram</p>
+              <a
+                href="https://t.me/ABCARONTONIO"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm text-white/70 hover:text-[#2AABEE] transition-colors"
+                aria-label="Message us on Telegram @ABCARONTONIO"
+              >
+                <Send size={14} className="text-[#2AABEE]" />
+                @ABCARONTONIO
+              </a>
+              <p className="text-white/40 text-xs mt-1">Tap to open Telegram</p>
+            </div>
           </div>
         </div>
 

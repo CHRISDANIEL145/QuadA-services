@@ -6,6 +6,8 @@ import { MdMessage } from '@/components/home/MdMessage'
 import { HowItWorks } from '@/components/home/HowItWorks'
 import { ServiceAreaMap } from '@/components/home/ServiceAreaMap'
 import { HeroCTA } from '@/components/home/HeroCTA'
+import { SocialConnect } from '@/components/home/SocialConnect'
+import { BackgroundMusic } from '@/components/home/BackgroundMusic'
 
 export const dynamic = 'force-dynamic'
 
@@ -14,6 +16,8 @@ export default async function HomePage() {
 
   return (
     <div className="min-h-screen bg-ground w-full overflow-x-clip">
+      {/* Ambient background music — starts muted, user can unmute */}
+      <BackgroundMusic />
       {/* 
         Emergency override to fix Hydration mismatch on the server. */}
       <HouseScene categories={categories} />
@@ -22,6 +26,7 @@ export default async function HomePage() {
       <MdMessage />
       <HowItWorks />
       <ServiceAreaMap />
+      <SocialConnect />
       <HeroCTA />
     </div>
   )
